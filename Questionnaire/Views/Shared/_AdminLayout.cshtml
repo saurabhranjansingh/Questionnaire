@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>D2CP - Questionnaire</title>
+    <title>D2CP - Admin</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -36,33 +36,27 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#help">Help</a>
-                    </li>
-                    <li>@Html.ActionLink("Login as Admin", "Index", "Login")</li>
+                    <li>@Html.ActionLink("Logout from Admin", "Index", "Login")</li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    @RenderBody()
-
-    <section class="bg-dark" id="help">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Need Help?</h2>
-                    <hr class="primary">
-                    <p>Please contact <span class="text-primary">Saurabh Singh</span>  or drop an email to <span class="text-primary">help@questionnaire.com</span> and we will get back to you as soon as possible!</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p>&copy; @DateTime.Now.Year - SRS & Sons</p>
-                </div>
-            </div>
+    <header>
+        <div class="header-content">
+            @RenderBody()
+            @*<div class="header-content-inner">
+                <h1>Lorem ipsum dolor sit amet</h1>
+                <hr>
+                <p>Take this small questionnaire and find out where you stand. Go go go...</p>
+                <a href="#about" class="btn btn-primary btn-xl page-scroll">Start Questionnaire</a>
+            </div>*@
         </div>
-    </section>
+    </header>
+ 
+
+    
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.easing.min.js"></script>

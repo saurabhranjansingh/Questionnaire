@@ -31,6 +31,7 @@ namespace Questionnaire.Controllers
             }
             else
             {
+                ModelState.AddModelError("INVALID_PWD", "Invalid login attempt.");
                 return View("Index");
             }
         }

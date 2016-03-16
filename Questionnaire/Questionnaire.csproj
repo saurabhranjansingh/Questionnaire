@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,10 +40,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -111,13 +122,44 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DropDownValueController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\QMController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
+    <Compile Include="Models\DropDownValues.cs">
+      <DependentUpon>QuestionnaireModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\Question.cs">
+      <DependentUpon>QuestionnaireModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionnaireMaster.cs">
+      <DependentUpon>QuestionnaireModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionnaireModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestionnaireModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionnaireModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestionnaireModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionnaireModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuestionnaireModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuestionType.cs">
+      <DependentUpon>QuestionnaireModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -126,12 +168,30 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\creative.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\QuestionnaireModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QuestionnaireModel.edmx</DependentUpon>
+      <LastGenOutput>QuestionnaireModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\QuestionnaireModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QuestionnaireModel.edmx</DependentUpon>
+      <LastGenOutput>QuestionnaireModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\QuestionnaireModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QuestionnaireModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\QuestionnaireModel.edmx.diagram">
+      <DependentUpon>QuestionnaireModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\creative.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -158,11 +218,26 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Shared\_DefLayout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\QM\Create.cshtml" />
+    <Content Include="Views\QM\Delete.cshtml" />
+    <Content Include="Views\QM\Details.cshtml" />
+    <Content Include="Views\QM\Edit.cshtml" />
+    <Content Include="Views\QM\Index.cshtml" />
+    <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Question\Delete.cshtml" />
+    <Content Include="Views\Question\Details.cshtml" />
+    <Content Include="Views\Question\Edit.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\DropDownValue\Create.cshtml" />
+    <Content Include="Views\DropDownValue\Delete.cshtml" />
+    <Content Include="Views\DropDownValue\Details.cshtml" />
+    <Content Include="Views\DropDownValue\Edit.cshtml" />
+    <Content Include="Views\DropDownValue\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -173,6 +248,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

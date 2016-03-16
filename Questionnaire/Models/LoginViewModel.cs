@@ -8,7 +8,7 @@ namespace Questionnaire.Models
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter password.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

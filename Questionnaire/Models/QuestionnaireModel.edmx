@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuestionnaireDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DropDownValues">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionnaireID" Type="int" Nullable="false" />
+          <Property Name="QuestionType" Type="int" Nullable="false" />
+          <Property Name="Hierarchy" Type="int" Nullable="false" />
+          <Property Name="QuesText" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="QuestionnaireMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="QuesType" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_QuestionID_ID">
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DropDownValues" Type="Self.DropDownValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DropDownValues">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionnaireID_ID">
+          <End Role="QuestionnaireMaster" Type="Self.QuestionnaireMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionnaireMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuestionnaireID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionType_ID">
+          <End Role="QuestionType" Type="Self.QuestionType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuestionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuestionnaireDBModelStoreContainer">
+          <EntitySet Name="DropDownValues" EntityType="Self.DropDownValues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionnaireMaster" EntityType="Self.QuestionnaireMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionType" EntityType="Self.QuestionType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_QuestionID_ID" Association="Self.FK_QuestionID_ID">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="DropDownValues" EntitySet="DropDownValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionnaireID_ID" Association="Self.FK_QuestionnaireID_ID">
+            <End Role="QuestionnaireMaster" EntitySet="QuestionnaireMaster" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionType_ID" Association="Self.FK_QuestionType_ID">
+            <End Role="QuestionType" EntitySet="QuestionType" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuestionnaireDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DropDownValues">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_QuestionID_ID" FromRole="DropDownValues" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionnaireID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionType" Type="Int32" Nullable="false" />
+          <Property Name="Hierarchy" Type="Int32" Nullable="false" />
+          <Property Name="QuesText" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DropDownValues" Relationship="Self.FK_QuestionID_ID" FromRole="Question" ToRole="DropDownValues" />
+          <NavigationProperty Name="QuestionnaireMaster" Relationship="Self.FK_QuestionnaireID_ID" FromRole="Question" ToRole="QuestionnaireMaster" />
+          <NavigationProperty Name="QuestionType1" Relationship="Self.FK_QuestionType_ID" FromRole="Question" ToRole="QuestionType" />
+        </EntityType>
+        <EntityType Name="QuestionnaireMaster">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_QuestionnaireID_ID" FromRole="QuestionnaireMaster" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="QuesType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Question" Relationship="Self.FK_QuestionType_ID" FromRole="QuestionType" ToRole="Question" />
+        </EntityType>
+        <Association Name="FK_QuestionID_ID">
+          <End Role="Question" Type="Self.Question" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DropDownValues" Type="Self.DropDownValues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DropDownValues">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionnaireID_ID">
+          <End Role="QuestionnaireMaster" Type="Self.QuestionnaireMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionnaireMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuestionnaireID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionType_ID">
+          <End Role="QuestionType" Type="Self.QuestionType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="QuestionType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuestionnaireDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DropDownValues" EntityType="Self.DropDownValues" />
+          <EntitySet Name="Question" EntityType="Self.Question" />
+          <EntitySet Name="QuestionnaireMaster" EntityType="Self.QuestionnaireMaster" />
+          <EntitySet Name="QuestionType" EntityType="Self.QuestionType" />
+          <AssociationSet Name="FK_QuestionID_ID" Association="Self.FK_QuestionID_ID">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="DropDownValues" EntitySet="DropDownValues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionnaireID_ID" Association="Self.FK_QuestionnaireID_ID">
+            <End Role="QuestionnaireMaster" EntitySet="QuestionnaireMaster" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionType_ID" Association="Self.FK_QuestionType_ID">
+            <End Role="QuestionType" EntitySet="QuestionType" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuestionnaireDBModelStoreContainer" CdmEntityContainer="QuestionnaireDBContext">
+          <EntitySetMapping Name="DropDownValues">
+            <EntityTypeMapping TypeName="QuestionnaireDBModel.DropDownValues">
+              <MappingFragment StoreEntitySet="DropDownValues">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question">
+            <EntityTypeMapping TypeName="QuestionnaireDBModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuestionnaireID" ColumnName="QuestionnaireID" />
+                <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
+                <ScalarProperty Name="Hierarchy" ColumnName="Hierarchy" />
+                <ScalarProperty Name="QuesText" ColumnName="QuesText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionnaireMaster">
+            <EntityTypeMapping TypeName="QuestionnaireDBModel.QuestionnaireMaster">
+              <MappingFragment StoreEntitySet="QuestionnaireMaster">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionType">
+            <EntityTypeMapping TypeName="QuestionnaireDBModel.QuestionType">
+              <MappingFragment StoreEntitySet="QuestionType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="QuesType" ColumnName="QuesType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
