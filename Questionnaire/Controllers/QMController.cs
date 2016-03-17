@@ -19,21 +19,7 @@ namespace Questionnaire.Controllers
         {
             return View(db.QuestionnaireMaster.ToList());
         }
-
-        // GET: QM/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            QuestionnaireMaster questionnaireMaster = db.QuestionnaireMaster.Find(id);
-            if (questionnaireMaster == null)
-            {
-                return HttpNotFound();
-            }
-            return View(questionnaireMaster);
-        }
+        
 
         // GET: QM/Create
         public ActionResult Create()

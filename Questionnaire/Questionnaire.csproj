@@ -163,11 +163,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminStyle.css" />
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\Background.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\creative.css" />
+    <Content Include="Content\DefUserStyle.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -225,7 +226,6 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\QM\Create.cshtml" />
     <Content Include="Views\QM\Delete.cshtml" />
-    <Content Include="Views\QM\Details.cshtml" />
     <Content Include="Views\QM\Edit.cshtml" />
     <Content Include="Views\QM\Index.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
