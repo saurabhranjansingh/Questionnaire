@@ -56,12 +56,26 @@ namespace Questionnaire.Controllers
             {
                 return HttpNotFound();
             }
+
+            string QuesCountMsg = String.Empty;
+            if (questionnaireMaster.Question.Count == 0)
+            {
+                QuesCountMsg = "No questions have been setup for this questionnaire.";
+            }
+            else if (questionnaireMaster.Question.Count == 1)
+            {
+                QuesCountMsg = "This questionnaire has only 1 question.";
+            }
+            else
+            {
+                QuesCountMsg = "This questionnaire has " + questionnaireMaster.Question.Count +  " questions.";
+            }
+
+            ViewBag.QuesCountMsg = QuesCountMsg;
             return View(questionnaireMaster);
         }
 
-        // POST: QM/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Name")] QuestionnaireMaster questionnaireMaster)

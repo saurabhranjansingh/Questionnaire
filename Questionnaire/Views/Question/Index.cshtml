@@ -1,28 +1,24 @@
 ﻿@model IEnumerable<Questionnaire.Models.Question>
 
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="text-center">Questions</h2>
+<hr />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<h4 class="text-info">@ViewBag.QuestionnaireName</h4>
+
+<table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Hierarchy)
+            Position
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.QuesText)
+            Question
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.QuestionnaireMaster.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuestionType1.QuesType)
+            Input Type
         </th>
         <th></th>
     </tr>
@@ -36,9 +32,6 @@
             @Html.DisplayFor(modelItem => item.QuesText)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.QuestionnaireMaster.Name)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.QuestionType1.QuesType)
         </td>
         <td>
@@ -50,3 +43,6 @@
 }
 
 </table>
+<div class="row">
+    <div class="pull-right">@Html.ActionLink("Create New", "Create", "Question", new { id = ViewBag.QuestionnaireID }, new { @class = "btn btn-primary" })</div>
+</div>

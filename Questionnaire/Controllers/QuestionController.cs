@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 using Questionnaire.Models;
@@ -15,9 +16,27 @@ namespace Questionnaire.Controllers
         private QuestionnaireDBContext db = new QuestionnaireDBContext();
 
         // GET: Question
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var question = db.Question.Include(q => q.QuestionnaireMaster).Include(q => q.QuestionType1);
+            var qr = db.QuestionnaireMaster.Find(id);
+            if (qr == null)
+            {
+                return HttpNotFound();
+            }
+
+            
+            //var qrName = (from x in db.QuestionnaireMaster
+            //                            where x.ID == id
+            //                            select x).FirstOrDefault();
+
+            ViewBag.QuestionnaireName = qr.Name;
+            ViewBag.QuestionnaireID = qr.ID;
+
+            var question = from x in db.Question
+                           join y in db.QuestionnaireMaster on x.QuestionnaireID equals y.ID
+                           where y.ID == id
+                           select x;
+
             return View(question.ToList());
         }
 
@@ -37,16 +56,22 @@ namespace Questionnaire.Controllers
         }
 
         // GET: Question/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.QuestionnaireID = new SelectList(db.QuestionnaireMaster, "ID", "Name");
+            var qr = db.QuestionnaireMaster.Find(id);
+            if (qr == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.QuestionnaireName = qr.Name;
+            ViewBag.QuestionnaireID = qr.ID;
+
             ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType");
             return View();
         }
 
         // POST: Question/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,QuestionnaireID,QuestionType,Hierarchy,QuesText")] Question question)

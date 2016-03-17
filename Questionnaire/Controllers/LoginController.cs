@@ -27,7 +27,8 @@ namespace Questionnaire.Controllers
 
             if(model.Password.Equals("12345"))
             {
-                return View("Index");
+
+                return RedirectToAction("Index","QM");
             }
             else
             {
