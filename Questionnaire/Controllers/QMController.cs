@@ -17,7 +17,7 @@ namespace Questionnaire.Controllers
         // GET: QM
         public ActionResult Index()
         {
-            return View(db.QuestionnaireMaster.ToList());
+            return View(db.QuestionnaireMaster.ToList().OrderBy(i => i.Name));
         }
         
 

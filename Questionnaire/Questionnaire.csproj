@@ -131,11 +131,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\HtmlHelpers.cs" />
-    <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\DropDownValues.cs">
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
     </Compile>
@@ -241,7 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

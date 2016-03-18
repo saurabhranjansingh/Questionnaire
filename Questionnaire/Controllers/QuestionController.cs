@@ -30,7 +30,7 @@ namespace Questionnaire.Controllers
             //                            select x).FirstOrDefault();
 
             ViewBag.QuestionnaireName = qr.Name;
-            ViewBag.QuestionnaireID = qr.ID;
+            ViewBag.QuestionnaireID = qr.ID;            
 
             var question = from x in db.Question
                            join y in db.QuestionnaireMaster on x.QuestionnaireID equals y.ID
@@ -66,6 +66,7 @@ namespace Questionnaire.Controllers
 
             ViewBag.QuestionnaireName = qr.Name;
             ViewBag.QuestionnaireID = qr.ID;
+            ViewBag.QuestionPosition = qr.Question.Count + 1;
 
             ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType");
             return View();
