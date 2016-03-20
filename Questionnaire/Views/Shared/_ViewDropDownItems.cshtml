@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Questionnaire.ViewModels.NewDDItem>
+
+<table class="table">
+    <tr>
+        <th>
+            List of Dropdown Items
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuestionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+        </tr>
+    }
+</table>
+<div class="row">
+    <div class="col-md-8">
+        <input type="text"/>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-danger">Add</button>
+    </div>
+</div>
+
+

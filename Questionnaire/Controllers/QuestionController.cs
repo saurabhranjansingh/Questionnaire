@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 using Questionnaire.Models;
+using Questionnaire.ViewModels;
 
 namespace Questionnaire.Controllers
 {
@@ -24,20 +25,27 @@ namespace Questionnaire.Controllers
                 return HttpNotFound();
             }
 
-            
+
             //var qrName = (from x in db.QuestionnaireMaster
             //                            where x.ID == id
             //                            select x).FirstOrDefault();
 
             ViewBag.QuestionnaireName = qr.Name;
-            ViewBag.QuestionnaireID = qr.ID;            
+            ViewBag.QuestionnaireID = qr.ID;
 
-            var question = from x in db.Question
+            var questions = from x in db.Question
                            join y in db.QuestionnaireMaster on x.QuestionnaireID equals y.ID
                            where y.ID == id
-                           select x;
+                           select new ViewQuestionsViewModel
+                           {
+                               ID = x.ID,
+                               Hierarchy = x.Hierarchy,
+                               QuesText = x.QuesText,
+                               QuestionType = x.QuestionType1.QuesType
+                           };
 
-            return View(question.ToList());
+
+            return View(questions.ToList());
         }
 
         // GET: Question/Details/5
@@ -75,18 +83,19 @@ namespace Questionnaire.Controllers
         // POST: Question/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,QuestionnaireID,QuestionType,Hierarchy,QuesText")] Question question)
+        //public ActionResult Create([Bind(Include = "ID,QuestionnaireID,QuestionType,Hierarchy,QuesText")] Question question)
+        public ActionResult Create(CreateQuestionViewModel cqVM)
         {
-            if (ModelState.IsValid)
-            {
-                db.Question.Add(question);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    db.Question.Add(question);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
 
-            ViewBag.QuestionnaireID = new SelectList(db.QuestionnaireMaster, "ID", "Name", question.QuestionnaireID);
-            ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType", question.QuestionType);
-            return View(question);
+            //ViewBag.QuestionnaireID = new SelectList(db.QuestionnaireMaster, "ID", "Name", question.QuestionnaireID);
+            //ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType", question.QuestionType);
+            return View();
         }
 
         // GET: Question/Edit/5
@@ -105,10 +114,7 @@ namespace Questionnaire.Controllers
             ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType", question.QuestionType);
             return View(question);
         }
-
-        // POST: Question/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,QuestionnaireID,QuestionType,Hierarchy,QuesText")] Question question)

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Questionnaire.Models;
+using Questionnaire.ViewModels;
 
 namespace Questionnaire.Controllers
 {
@@ -28,20 +29,19 @@ namespace Questionnaire.Controllers
         }
 
         // POST: QM/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name")] QuestionnaireMaster questionnaireMaster)
+        public ActionResult Create(CreateQuestionnaireViewModel cqVM)
         {
             if (ModelState.IsValid)
             {
+                var questionnaireMaster = new QuestionnaireMaster {Name = cqVM.Name};
                 db.QuestionnaireMaster.Add(questionnaireMaster);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(questionnaireMaster);
+            return View(cqVM);
         }
 
         // GET: QM/Edit/5
@@ -72,21 +72,29 @@ namespace Questionnaire.Controllers
             }
 
             ViewBag.QuesCountMsg = QuesCountMsg;
-            return View(questionnaireMaster);
+
+            EditQuestionnaireViewModel eqVM = new EditQuestionnaireViewModel
+            {
+                ID = questionnaireMaster.ID,
+                Name = questionnaireMaster.Name
+            };
+            return View(eqVM);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name")] QuestionnaireMaster questionnaireMaster)
+        public ActionResult Edit(EditQuestionnaireViewModel eqVM)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(questionnaireMaster).State = EntityState.Modified;
+                var qm = new QuestionnaireMaster {ID = eqVM.ID, Name = eqVM.Name};
+
+                db.Entry(qm).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(questionnaireMaster);
+            return View(eqVM);
         }
 
         // GET: QM/Delete/5

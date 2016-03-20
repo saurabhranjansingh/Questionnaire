@@ -134,6 +134,9 @@
     <Compile Include="Models\DropDownValues.cs">
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CreateQuestionnaireViewModel.cs" />
+    <Compile Include="ViewModels\CreateQuestionViewModel.cs" />
+    <Compile Include="ViewModels\EditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
@@ -160,6 +163,8 @@
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\NewDDItem.cs" />
+    <Compile Include="ViewModels\ViewQuestionsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AdminStyle.css" />
@@ -206,6 +211,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -237,6 +243,7 @@
     <Content Include="Views\DropDownValue\Details.cshtml" />
     <Content Include="Views\DropDownValue\Edit.cshtml" />
     <Content Include="Views\DropDownValue\Index.cshtml" />
+    <Content Include="Views\Shared\_ViewDropDownItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

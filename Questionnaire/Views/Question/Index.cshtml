@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Questionnaire.Models.Question>
+﻿@model IEnumerable<Questionnaire.ViewModels.ViewQuestionsViewModel>
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -32,7 +32,7 @@
             @Html.DisplayFor(modelItem => item.QuesText)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.QuestionType1.QuesType)
+            @Html.DisplayFor(modelItem => item.QuestionType)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

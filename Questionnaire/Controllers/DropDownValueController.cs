@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Questionnaire.Models;
+using Questionnaire.ViewModels;
 
 namespace Questionnaire.Controllers
 {
@@ -15,10 +14,39 @@ namespace Questionnaire.Controllers
         private QuestionnaireDBContext db = new QuestionnaireDBContext();
 
         // GET: DropDownValue
-        public ActionResult Index()
+        public ActionResult AddItemToList(int id)
         {
-            var dropDownValues = db.DropDownValues.Include(d => d.Question);
-            return View(dropDownValues.ToList());
+            List<NewDDItem> DDItemsList;
+
+            if (Session["NewQuestionDDItems"] == null)
+            {
+                //Session["NewQuestionDDItems"] = new List<NewDDItem>();
+                DDItemsList = new List<NewDDItem>();
+                DDItemsList.Add(new NewDDItem {QuestionID = 1, Value = "ABC"});
+                DDItemsList.Add(new NewDDItem { QuestionID = 1, Value = "DEF" });
+
+            }
+            else
+            {
+                DDItemsList = (List<NewDDItem>) Session["NewQuestionDDItems"];
+            }
+            return View(DDItemsList);
+            //var ddItems = from x in db.DropDownValues
+            //              where x.QuestionID == id
+            //              select new ViewDDItemsViewModel
+            //              {
+            //                  ID = x.ID,
+            //                  QuestionID = x.QuestionID,
+            //                  Value = x.Value
+            //              };
+
+            //var ddItemsViewModel = new DropDownItemsViewModel
+            //{
+            //    ID =
+            //}
+
+            //var dropDownValues = db.DropDownValues.Include(d => d.Question);
+            //return System.Web.UI.WebControls.View(ddItems.ToList());
         }
 
         // GET: DropDownValue/Details/5
@@ -43,9 +71,7 @@ namespace Questionnaire.Controllers
             return View();
         }
 
-        // POST: DropDownValue/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+  
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,QuestionID,Value")] DropDownValues dropDownValues)

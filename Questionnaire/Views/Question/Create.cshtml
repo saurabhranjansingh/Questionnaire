@@ -1,4 +1,4 @@
-﻿@model Questionnaire.Models.Question
+﻿@model Questionnaire.ViewModels.CreateQuestionViewModel
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -24,6 +24,16 @@
             </div>
         </div>
 
+        @*Position*@
+        <div class="form-group">
+            <label class="control-label col-md-2" for="position">Position</label>
+            <div class="col-md-10">
+                <label id="position" class="control-label text-info">@ViewBag.QuestionPosition</label>
+                @*@Html.EditorFor(model => model.Hierarchy, new {htmlAttributes = new {@id = "position", @class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Hierarchy, "", new {@class = "text-danger"})*@
+            </div>
+        </div>
+
         @*Question Text*@
         <div class="form-group">
             <label class="control-label col-md-2" for="quesText">Question/Text</label>
@@ -35,22 +45,15 @@
 
         @*Input Type*@
         <div class="form-group">
-            <label class="control-label col-md-2" for="inputType">Input Type</label>
+            <label class="control-label col-md-2" for="SetNewQuesInputType">Input Type</label>
             <div class="col-md-10">
-                @Html.DropDownList("QuestionType", null, htmlAttributes: new {@id = "inputType", @class = "form-control"})
+                @Html.DropDownList("QuestionType", null, htmlAttributes: new {@id = "SetNewQuesInputType", @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.QuestionType, "", new {@class = "text-danger"})
             </div>
         </div>
 
-        @*Position*@
-        <div class="form-group">
-            <label class="control-label col-md-2" for="position">Position</label>
-            <div class="col-md-10">
-                <label id="position" class="control-label text-info">@ViewBag.QuestionPosition</label>
-                @*@Html.EditorFor(model => model.Hierarchy, new {htmlAttributes = new {@id = "position", @class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Hierarchy, "", new {@class = "text-danger"})*@
-            </div>
-        </div>
+        <!-- Placeholder for partialview : Adding dropdown values -->
+        <div id="DropDownValuesPlaceHolder" style="display:none;"> </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -59,5 +62,5 @@
             </div>
         </div>
     </div>
-
+   
 }
