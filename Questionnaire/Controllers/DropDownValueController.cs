@@ -14,17 +14,17 @@ namespace Questionnaire.Controllers
         private QuestionnaireDBContext db = new QuestionnaireDBContext();
 
         // GET: DropDownValue
-        public ActionResult AddItemToList(int id)
+        public ActionResult _ViewDropDownItems(int id)
         {
             List<NewDDItem> DDItemsList;
 
             if (Session["NewQuestionDDItems"] == null)
             {
-                //Session["NewQuestionDDItems"] = new List<NewDDItem>();
                 DDItemsList = new List<NewDDItem>();
                 DDItemsList.Add(new NewDDItem {QuestionID = 1, Value = "ABC"});
                 DDItemsList.Add(new NewDDItem { QuestionID = 1, Value = "DEF" });
 
+                Session["NewQuestionDDItems"] = DDItemsList;
             }
             else
             {
@@ -47,6 +47,20 @@ namespace Questionnaire.Controllers
 
             //var dropDownValues = db.DropDownValues.Include(d => d.Question);
             //return System.Web.UI.WebControls.View(ddItems.ToList());
+        }
+
+        public ActionResult RemoveItem(string ItemName)
+        {
+            List<NewDDItem> DDItemsList = (List<NewDDItem>) Session["NewQuestionDDItems"];
+            foreach (var item in DDItemsList)
+            {
+                if(item.Value.ToString().ToUpper().Trim().Equals(ItemName.ToUpper().Trim()))
+                {
+                    DDItemsList.Remove(item);
+                    break;
+                }
+            }
+            return View("_ViewDropDownItems", DDItemsList);            
         }
 
         // GET: DropDownValue/Details/5

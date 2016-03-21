@@ -1,32 +1,52 @@
 ﻿@model IEnumerable<Questionnaire.ViewModels.NewDDItem>
 
-<table class="table">
-    <tr>
-        <th>
-            List of Dropdown Items
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuestionID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Value)
-            </td>
+<div style="border:solid 1px #C7CCD0; border-radius:4px; padding: 10px">
+    <table class="table table-striped table-condensed">
+        <tr style="border: solid 1px #DAD5D5; padding:0;">
+            <th class="text-info">
+                Dropdown Items
+            </th>
+            <th></th>
         </tr>
-    }
-</table>
-<div class="row">
-    <div class="col-md-8">
-        <input type="text"/>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    <i class="fa fa-trash-o"></i>
+                    @Ajax.ActionLink("Remove",
+                                    "RemoveItem",
+                                    new { ItemName = item.Value },
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "DropDownValuesPlaceHolder",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "GET"
+                                    })
+                </td>
+            </tr>
+        }
+    </table>
+    <div class="row col-md-12" style="margin-top:15px;">
+        <div class="text-info"><label>Add New Item</label></div>
     </div>
-    <div class="col-md-4">
-        <button class="btn btn-danger">Add</button>
+    <div class="row">
+        <div class="col-md-9">
+            <input id="txtNewDropDownItem" style="float: left" class="form-control" type="text" />
+        </div>
+        <div class="col-md-3">
+            <div id="btnAddNewItem" class="btn btn-sm btn-info" onclick="AddNewItemLoDropDownList(); return false;">Add Item</div>
+        </div>
+    </div>
+    <div class="row" id="ErrorPanel" style="margin-top:8px;">
+        <div class="col-md-9">
+            <div class="alert-danger" style="border-radius:5px;">
+                <i class="fa fa-exclamation-triangle" style="float:left; padding:8px;"></i>
+                <div id="ErrorMessage" style="padding:4px;">Can not be empty</div>
+            </div>
+        </div>
     </div>
 </div>
-
-
