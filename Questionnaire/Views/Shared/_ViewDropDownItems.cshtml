@@ -12,7 +12,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td class="ddExistingValue">
                     @Html.DisplayFor(modelItem => item.Value)
                 </td>
                 <td>
@@ -38,14 +38,14 @@
             <input id="txtNewDropDownItem" style="float: left" class="form-control" type="text" />
         </div>
         <div class="col-md-3">
-            <div id="btnAddNewItem" class="btn btn-sm btn-info" onclick="AddNewItemLoDropDownList(); return false;">Add Item</div>
+            <div id="btnAddNewItem" class="btn btn-sm btn-info" onclick="AddNewItemToDropDownList(); return false;">Add Item</div>
         </div>
     </div>
-    <div class="row" id="ErrorPanel" style="margin-top:8px;">
+    <div class="row" id="ErrorPanel" style="margin-top: 8px; display: none; ">
         <div class="col-md-9">
             <div class="alert-danger" style="border-radius:5px;">
                 <i class="fa fa-exclamation-triangle" style="float:left; padding:8px;"></i>
-                <div id="ErrorMessage" style="padding:4px;">Can not be empty</div>
+                <div id="ErrorMessage" style="padding:4px;">Error!</div>
             </div>
         </div>
     </div>

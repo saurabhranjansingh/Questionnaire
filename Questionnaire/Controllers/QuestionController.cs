@@ -34,15 +34,15 @@ namespace Questionnaire.Controllers
             ViewBag.QuestionnaireID = qr.ID;
 
             var questions = from x in db.Question
-                           join y in db.QuestionnaireMaster on x.QuestionnaireID equals y.ID
-                           where y.ID == id
-                           select new ViewQuestionsViewModel
-                           {
-                               ID = x.ID,
-                               Hierarchy = x.Hierarchy,
-                               QuesText = x.QuesText,
-                               QuestionType = x.QuestionType1.QuesType
-                           };
+                            join y in db.QuestionnaireMaster on x.QuestionnaireID equals y.ID
+                            where y.ID == id
+                            select new ViewQuestionsViewModel
+                            {
+                                ID = x.ID,
+                                Hierarchy = x.Hierarchy,
+                                QuesText = x.QuesText,
+                                QuestionType = x.QuestionType1.QuesType
+                            };
 
 
             return View(questions.ToList());
@@ -73,29 +73,77 @@ namespace Questionnaire.Controllers
             }
 
             ViewBag.QuestionnaireName = qr.Name;
-            ViewBag.QuestionnaireID = qr.ID;
-            ViewBag.QuestionPosition = qr.Question.Count + 1;
+
+            var cqVM = new CreateQuestionViewModel
+            {
+                Hierarchy = qr.Question.Count + 1,
+                QuestionnaireID = id
+            };
+
+
+            //ViewBag.QuestionnaireID = qr.ID;
+            //ViewBag.QuestionPosition = qr.Question.Count + 1;
 
             ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType");
-            return View();
+            return View(cqVM);
         }
 
         // POST: Question/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "ID,QuestionnaireID,QuestionType,Hierarchy,QuesText")] Question question)
         public ActionResult Create(CreateQuestionViewModel cqVM)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.Question.Add(question);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
+            if (ModelState.IsValid)
+            {
+                List<DropDownValues> d = new List<DropDownValues>();
+                //If its a dropdown question
+                if (cqVM.QuestionType == 2)
+                {
+                    bool DropDownItemsExist = true;
+                    if (Session["NewQuestionDDItems"] == null)
+                    {
+                        DropDownItemsExist = false;
+                    }
+                    else
+                    {
+                        var DDItemsList = (List<NewDDItem>)Session["NewQuestionDDItems"];
+                        if (DDItemsList.Count == 0)
+                        {
+                            DropDownItemsExist = false;
+                        }
+                        else
+                        {
+                            foreach (var item in DDItemsList)
+                            {
+                                d.Add(new DropDownValues { Value = item.Value });
+                            }
+                        }
+                    }
+                    //If no drop down items have been set: ERROR
+                    if (!DropDownItemsExist)
+                    {
+                        ModelState.AddModelError("DROP_DOWN_ITEMS_EMPTY","Dropdown items list can not be empty.");
 
-            //ViewBag.QuestionnaireID = new SelectList(db.QuestionnaireMaster, "ID", "Name", question.QuestionnaireID);
-            //ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType", question.QuestionType);
-            return View();
+                        return View(cqVM);
+                    }
+                }
+
+                Question q = new Question
+                {
+                    QuestionnaireID = cqVM.QuestionnaireID,
+                    QuesText = cqVM.QuesText,
+                    QuestionType = cqVM.QuestionType,
+                    Hierarchy = cqVM.Hierarchy,
+                    DropDownValues = d
+
+                };
+
+                db.Question.Add(q);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            
+            return View(cqVM);
         }
 
         // GET: Question/Edit/5
@@ -114,7 +162,7 @@ namespace Questionnaire.Controllers
             ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType", question.QuestionType);
             return View(question);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,QuestionnaireID,QuestionType,Hierarchy,QuesText")] Question question)
