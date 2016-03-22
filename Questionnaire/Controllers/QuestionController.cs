@@ -24,11 +24,7 @@ namespace Questionnaire.Controllers
             {
                 return HttpNotFound();
             }
-
-
-            //var qrName = (from x in db.QuestionnaireMaster
-            //                            where x.ID == id
-            //                            select x).FirstOrDefault();
+            
 
             ViewBag.QuestionnaireName = qr.Name;
             ViewBag.QuestionnaireID = qr.ID;

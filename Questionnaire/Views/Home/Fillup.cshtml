@@ -4,15 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>D2CP - Questionnaire</title>
+    <title>Questionnaire - Fillup</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <!-- Plugin CSS -->
-    <link href="~/Content/animate.min.css" rel="stylesheet" />
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Custom CSS -->
-    <link href="~/Content/DefUserStyle.css" rel="stylesheet" />
+    <link href="~/Content/AdminStyle.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -36,33 +34,28 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="collapsable-navbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#help">Help</a>
-                    </li>
-                    <li>@Html.ActionLink("Login as Admin", "Index", "Login")</li>
+                    <li>@Html.ActionLink("Discard", "Index")</li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    @RenderBody()
-
-    <section class="bg-dark" id="help">
+    <section>
         <div class="container">
+            <div class="row text-center">
+                <h3 class="text-primary">@ViewBag.QuestionnaireName</h3>
+                <hr/>
+            </div>
             <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Need Help?</h2>
-                    <hr class="primary">
-                    <p>Please contact <span class="text-primary">Saurabh Singh</span>  or drop an email to <span class="text-primary">help@questionnaire.com</span> and we will get back to you as soon as possible!</p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p>&copy; @DateTime.Now.Year - SRS & Sons</p>
-                </div>
+                start here
+                @*@RenderBody()*@
             </div>
         </div>
     </section>
+
+
+
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.easing.min.js"></script>
@@ -71,9 +64,10 @@
     <script src="~/Scripts/creative.js"></script>
     <script src="/Scripts/jquery.validate.js"></script>
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
-    <script src="~/Scripts/Custom/LandingPage.js"></script>
-
-
-
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </body>
 </html>
+
+
+
+
