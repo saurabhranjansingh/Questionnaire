@@ -24,7 +24,8 @@
                                     {
                                         UpdateTargetId = "DropDownValuesPlaceHolder",
                                         InsertionMode = InsertionMode.Replace,
-                                        HttpMethod = "GET"
+                                        HttpMethod = "GET",
+                                        OnSuccess = "CheckIfAnyDDItemExists()"
                                     })
                 </td>
             </tr>

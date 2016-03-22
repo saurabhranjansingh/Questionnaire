@@ -3,6 +3,9 @@
     /* This is change event for dropdownlist */
     $("#SetNewQuesInputType").change(function () {
 
+        $('#btnCreateQuestion').prop('disabled', false);
+
+
         /* Get the selected value of dropdownlist */
         var selectedId = $(this).val();
 
@@ -16,6 +19,9 @@
                 $("#DropDownValuesPlaceHolder").html(data);
                 $("#DropDownValuesPlaceHolder").fadeIn("fast");
             });
+
+            //Check if dropdown items are already present (because they are stored in session)
+            CheckIfAnyDDItemExists();
         }
         else {
             $("#DropDownValuesPlaceHolder").fadeOut("fast");
@@ -52,7 +58,29 @@ function AddNewItemToDropDownList() {
             /* data is the pure html returned from action method, load it to your page */
             $("#DropDownValuesPlaceHolder").html(data);
             $("#DropDownValuesPlaceHolder").fadeIn("fast");
+            CheckIfAnyDDItemExists();
         });
+
+        //$('#btnCreateQuestion').prop('disabled', false);
+        //CheckIfAnyDDItemExists();
     }
 
+}
+
+function CheckIfAnyDDItemExists() {
+
+    var allExistingValues = $(".ddExistingValue").map(function () {
+        return this.innerHTML;
+    }).get();
+
+
+    //If there are no items present in the List of dropdown items then Disable the 'Create Question' button.
+    if (allExistingValues.length == 0) {
+        $('#btnCreateQuestion').prop('disabled', true);
+        $("#AddAtleast1DDItem").show();
+    }
+    else {
+        $('#btnCreateQuestion').prop('disabled', false);
+        $("#AddAtleast1DDItem").hide();
+    }
 }

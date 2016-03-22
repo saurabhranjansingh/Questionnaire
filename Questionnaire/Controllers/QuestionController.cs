@@ -66,6 +66,11 @@ namespace Questionnaire.Controllers
         // GET: Question/Create
         public ActionResult Create(int id)
         {
+            if (Session["NewQuestionDDItems"] != null)
+            {
+                Session["NewQuestionDDItems"] = null;
+            }
+
             var qr = db.QuestionnaireMaster.Find(id);
             if (qr == null)
             {
@@ -96,35 +101,15 @@ namespace Questionnaire.Controllers
             if (ModelState.IsValid)
             {
                 List<DropDownValues> d = new List<DropDownValues>();
+
                 //If its a dropdown question
                 if (cqVM.QuestionType == 2)
                 {
-                    bool DropDownItemsExist = true;
-                    if (Session["NewQuestionDDItems"] == null)
-                    {
-                        DropDownItemsExist = false;
-                    }
-                    else
-                    {
-                        var DDItemsList = (List<NewDDItem>)Session["NewQuestionDDItems"];
-                        if (DDItemsList.Count == 0)
-                        {
-                            DropDownItemsExist = false;
-                        }
-                        else
-                        {
-                            foreach (var item in DDItemsList)
-                            {
-                                d.Add(new DropDownValues { Value = item.Value });
-                            }
-                        }
-                    }
-                    //If no drop down items have been set: ERROR
-                    if (!DropDownItemsExist)
-                    {
-                        ModelState.AddModelError("DROP_DOWN_ITEMS_EMPTY","Dropdown items list can not be empty.");
+                    var DDItemsList = (List<NewDDItem>)Session["NewQuestionDDItems"];
 
-                        return View(cqVM);
+                    foreach (var item in DDItemsList)
+                    {
+                        d.Add(new DropDownValues { Value = item.Value });
                     }
                 }
 
@@ -142,7 +127,7 @@ namespace Questionnaire.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
+
             return View(cqVM);
         }
 
