@@ -9,8 +9,10 @@
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="~/Content/AdminStyle.css" rel="stylesheet" />
+    <link href="~/Content/Fillup.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -45,19 +47,227 @@
         <div class="container">
             <div class="row text-center">
                 <h3 class="text-primary">@ViewBag.QuestionnaireName</h3>
-                <hr/>
+                <hr />
             </div>
-            <div class="row">
-                start here
+            <form id="FillupForm">
                 @*@RenderBody()*@
+                <div class="row">
+                    <div class="col-lg-offset-2 col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Basic Information</div>
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+
+                                    @*Field 1 : Date of Call*@
+                                    <div class="row BasicInputRow form-group required">
+                                        <div class="col-sm-offset-1 col-sm-3 control-label">
+                                            <label for="DateOfCall">Date of Call</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="input-group" id="DateOfCall">
+                                                <input id="BasicInputField1" name="bif1" class="form-control" placeholder="MM/DD/YYYY" type="text" required />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*Field 2 : Company*@
+                                    <div class="row BasicInputRow form-group required">
+                                        <div class="col-sm-offset-1 col-sm-3 control-label">
+                                            <label for="BasicInputField2">Company</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="BasicInputField2" name="bif2" class="form-control" type="text" maxlength="100" required />
+                                        </div>
+                                    </div>
+
+                                    @*Field 3 : Client Lead*@
+                                    <div class="row BasicInputRow form-group required">
+                                        <div class="col-sm-offset-1 col-sm-3 control-label">
+                                            <label for="BasicInputField3">Client Lead</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="BasicInputField3" name="bif3" class="form-control" type="text" maxlength="100" required />
+                                        </div>
+                                    </div>
+
+                                    @*Field 4 : Deltek Sales Lead*@
+                                    <div class="row BasicInputRow form-group required">
+                                        <div class="col-sm-offset-1 col-sm-3 control-label">
+                                            <label for="BasicInputField4">Deltek Sales Lead</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="BasicInputField4" name="bif4" class="form-control" type="text" maxlength="100" required />
+                                        </div>
+                                    </div>
+
+                                    @*Field 5 : Infotek Lead*@
+                                    <div class="row BasicInputRow form-group required">
+                                        <div class="col-sm-offset-1 col-sm-3 control-label">
+                                            <label for="BasicInputField5">Infotek Lead</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="BasicInputField5" name="bif5" class="form-control" type="text" maxlength="100" required />
+                                        </div>
+                                    </div>
+
+                                    @*Field 6 : Contact Number*@
+                                    <div class="row BasicInputRow form-group">
+                                        <div class="col-sm-offset-1 col-sm-3 control-label">
+                                            <label for="BasicInputField6">Contact Number</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="BasicInputField6" name="bif6" class="form-control" type="text" maxlength="100" />
+                                        </div>
+                                    </div>
+
+                                    @*Field 5 : Contact Email*@
+                                    <div class="row BasicInputRow form-group">
+                                        <div class="col-sm-offset-1 col-sm-3 control-label">
+                                            <label for="BasicInputField7">Contact Email</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="BasicInputField7" name="bif7" class="form-control" type="email" maxlength="100"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="pull-right" style="font-size: small">
+                                            <span class="text-primary">*</span><span style="margin-right: 20px;">&nbsp;required fields</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="text text-info">
+                            We understand that your time is valuable, so to thank you for your help, everyone who fills out the survey will be entered into a drawing to win a $500 Amazon gift card.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row QuestionRow">
+                    <div class="text-primary QuestionNumber">
+                        1
+                    </div>
+                    <div class="col-sm-11 QuestionPanel">
+                        <div class="row">
+                            As a physicist, I was originally trained to describe the world in terms of exact equations. Later, as an experimental high-energy particle physicist, I learned to deal with vast amounts of data with errors and with evaluating competing models to describe the data. True?
+                        </div>
+                        <div class="row col-sm-12 InputPanel">
+                            <div class="pull-right">
+                                <div class="btn-group-sm" data-toggle="buttons">
+                                    <label class="btn btn-default radiobtn active" onclick="alert('hello');">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+                                    </label>
+                                    <label class="btn btn-default radiobtn">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> No
+                                    </label>
+                                    <label class="btn btn-default radiobtn">
+                                        <input type="radio" name="options" id="option3" autocomplete="off"> N.A.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row QuestionRow">
+                    <div class="text-primary QuestionNumber">
+                        2
+                    </div>
+                    <div class="col-sm-11 QuestionPanel">
+                        <div class="row">
+                            Which car type you prefer?
+                        </div>
+                        <div class="row col-sm-12 InputPanel">
+                            <div class="pull-right">
+                                <select class="form-control">
+                                    <option value="1">Nano Type very small car</option>
+                                    <option value="4">Hatchback</option>
+                                    <option value="3">SUV or MUV</option>
+                                    <option value="5">Does not matter.</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row QuestionRow">
+                    <div class="text-primary QuestionNumber">
+                        3
+                    </div>
+                    <div class="col-sm-11 QuestionPanel">
+                        <div class="row">
+                            How will you summarize yourself?
+                        </div>
+                        <div class="row col-sm-12 InputPanel">
+                            <div class="col-sm-offset-4 col-sm-8" style="padding: 0;">
+                                <input class="form-control" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row QuestionRow">
+                    <div class="text-primary QuestionNumber">
+                        4
+                    </div>
+                    <div class="col-sm-11 QuestionPanel">
+                        <div class="row">
+                            Please provide your Date of Birth.
+                        </div>
+                        <div class="row col-sm-12 InputPanel">
+                            <div class="col-sm-offset-9 col-sm-3" style="padding: 0;">
+                                <div class="input-group date" id="datetimepicker1">
+                                    <input type="text" class="form-control" placeholder="MM/DD/YYYY" />
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row QuestionRow">
+                    <div class="text-primary QuestionNumber">
+                        5
+                    </div>
+                    <div class="col-sm-11 QuestionPanel">
+                        <div class="row">
+                            Your weight?
+                        </div>
+                        <div class="row col-sm-12 InputPanel">
+                            <div class="col-sm-offset-9 col-sm-3" style="padding: 0;">
+                                <input name="xoxo" class="form-control" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-lg-11">
+                <div class="btn btn-lg btn-success pull-right" onclick="submitForm(); return false;">Submit</div>
             </div>
+        </div>
         </div>
     </section>
 
 
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="~/Scripts/jquery.easing.min.js"></script>
     <script src="~/Scripts/jquery.fittext.js"></script>
     <script src="~/Scripts/wow.min.js"></script>
@@ -65,9 +275,74 @@
     <script src="/Scripts/jquery.validate.js"></script>
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script type="text/javascript">
+    function submitForm() {
+        console.log("validating..");
+        if ($('#FillupForm').valid()) {
+            //alert('GREAT! form is valid');
+        } else {
+            //alert('form is not valid');
+        }
+    }
+
+    $(function () {
+        $('#datetimepicker1').datetimepicker({ format: "MM/DD/YYYY" });
+        $('#DateOfCall').datetimepicker({ format: "MM/DD/YYYY" });
+    });
+
+    $("#FillupForm").validate({
+        errorPlacement: function (error, element) {
+            if (element.attr("name") === 'bif1')
+                error.insertAfter($("#DateOfCall"));
+            else 
+                error.insertAfter(element);
+        },
+        focusInvalid: false,
+        invalidHandler: function(form, validator) {
+
+            if (!validator.numberOfInvalids())
+                return;
+
+            $('html, body').animate({
+                scrollTop: $(validator.errorList[0].element).offset().top - 70
+            }, 1000);
+
+        },
+        rules: {
+            //bif11: {
+            //    format: 'MM/DD/YYYY',
+            //    required: true
+            //},
+            //bif22: {
+            //    required: true,
+            //    maxlength: 100
+            //},
+            //bif3: {
+            //    required: true,
+            //    maxlength: 100
+            //},
+            //bif4: {
+            //    required: true,
+            //    maxlength: 100
+            //},
+            //bif5: {
+            //    required: true,
+            //    maxlength: 100
+            //},
+            //bif6: {
+            //    maxlength: 100
+            //},
+            //bif7: {
+            //    email: true,
+            //    maxlength: 50
+            //},
+
+            xoxo: {
+                number: true,
+                required: true
+            }
+        }
+    });
+</script>
 </body>
 </html>
-
-
-
-
