@@ -147,11 +147,11 @@
                 </div>
 
                 @Html.Raw(ViewBag.GeneratedHtml)
-
+             
             </form>
             <div class="row" style="margin-top: 30px;">
                 <div class="col-lg-11">
-                    <div id="btnSubmitForm" class="btn btn-lg btn-success pull-right">Submit</div>
+                    <div class="btn btn-lg btn-success pull-right" onclick="submitForm(); return false;">Submit</div>
                 </div>
             </div>
         </div>
@@ -171,7 +171,50 @@
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/Custom/Fillup.js"></script>
- 
+    <script type="text/javascript">
+    function submitForm() {
+        console.log("validating..");
+        ccc();
+
+        //if ($('#FillupForm').valid()) {
+        //    alert('GREAT! form is valid');
+        //} else {
+        //    alert('form is not valid');
+        //}
+    }
+
+    $(function() {
+        $('.date').datetimepicker({ format: "MM/DD/YYYY" });
+        $('#DateOfCall').datetimepicker({ format: "MM/DD/YYYY" });
+    });
+
+    $("#FillupForm").validate({
+        errorPlacement: function(error, element) {
+            if (element.attr("name") === 'bif1')
+                error.insertAfter($("#DateOfCall"));
+            else
+                error.insertAfter(element);
+        },
+        focusInvalid: false,
+        invalidHandler: function(form, validator) {
+
+            if (!validator.numberOfInvalids())
+                return;
+
+            $('html, body').animate({
+                scrollTop: $(validator.errorList[0].element).offset().top - 70
+            }, 1000);
+
+        }
+    });
+
+    $('.num').each(function () {
+        $(this).rules('add', {
+            number: true
+        });
+    });
+    </script>
+
 
 </body>
 </html>

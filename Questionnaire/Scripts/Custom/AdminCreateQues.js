@@ -3,11 +3,12 @@
     /* This is change event for dropdownlist */
     $("#SetNewQuesInputType").change(function () {
 
-        $('#btnCreateQuestion').prop('disabled', false);
-
+        $("#btnCreateQuestion").prop("disabled", false);
 
         /* Get the selected value of dropdownlist */
         var selectedId = $(this).val();
+
+        $("#AddAtleast1DDItem").hide();
 
         //If the input type is DropDown
         if (selectedId == 2) {
@@ -15,7 +16,7 @@
             /* Request the partial view with .get request. */
             $.get("/DropDownValue/_ViewDropDownItems/", function (data) {
 
-                /* data is the pure html returned from action method, load it to your page */
+                /* data is the pure html returned from action method, load it directly */
                 $("#DropDownValuesPlaceHolder").html(data);
                 $("#DropDownValuesPlaceHolder").fadeIn("fast");
             });
@@ -76,11 +77,11 @@ function CheckIfAnyDDItemExists() {
 
     //If there are no items present in the List of dropdown items then Disable the 'Create Question' button.
     if (allExistingValues.length == 0) {
-        $('#btnCreateQuestion').prop('disabled', true);
+        $("#btnCreateQuestion").prop("disabled", true);
         $("#AddAtleast1DDItem").show();
     }
     else {
-        $('#btnCreateQuestion').prop('disabled', false);
+        $("#btnCreateQuestion").prop("disabled", false);
         $("#AddAtleast1DDItem").hide();
     }
 }

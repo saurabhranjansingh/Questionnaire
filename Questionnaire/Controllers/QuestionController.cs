@@ -121,7 +121,7 @@ namespace Questionnaire.Controllers
 
                 db.Question.Add(q);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = cqVM.QuestionnaireID});
             }
 
             return View(cqVM);

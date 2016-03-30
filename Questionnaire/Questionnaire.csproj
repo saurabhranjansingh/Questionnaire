@@ -130,10 +130,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="HTMLBuilder\DateQuesType.cs" />
+    <Compile Include="HTMLBuilder\DropdownQuesType.cs" />
+    <Compile Include="HTMLBuilder\FreeTextQuesType.cs" />
+    <Compile Include="HTMLBuilder\InstructionType.cs" />
+    <Compile Include="HTMLBuilder\NumericQuesType.cs" />
+    <Compile Include="HTMLBuilder\QuesTypeFactory.cs" />
     <Compile Include="Models\DropDownValues.cs">
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="HTMLBuilder\BooleanQuesType.cs" />
+    <Compile Include="HTMLBuilder\HtmlBuilder.cs" />
+    <Compile Include="HTMLBuilder\HtmlSkeleton.cs" />
+    <Compile Include="HTMLBuilder\QuesType.cs" />
     <Compile Include="ViewModels\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModels\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModels\EditQuestionnaireViewModel.cs" />
@@ -265,6 +274,7 @@
     <Content Include="Views\DropDownValue\Edit.cshtml" />
     <Content Include="Views\DropDownValue\Index.cshtml" />
     <Content Include="Views\Shared\_ViewDropDownItems.cshtml" />
+    <Content Include="Views\Shared\_FillupLayout.cshtml" />
     <Content Include="Views\Home\Fillup.cshtml" />
   </ItemGroup>
   <ItemGroup>

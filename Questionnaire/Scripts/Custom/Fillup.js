@@ -1,4 +1,52 @@
-﻿function ccc() {
+﻿function submitForm() {
+    //console.log("validating..");
+    GatherUserResponse();
+
+    if ($("#FillupForm").valid()) {
+        alert("GREAT! form is valid");
+    } 
+}
+
+$(function () {
+    $(".date").datetimepicker({ format: "MM/DD/YYYY" });
+    $("#DateOfCall").datetimepicker({ format: "MM/DD/YYYY" });
+
+    $(".num").each(function () {
+        $(this).rules("add", {
+            number: true
+        });
+    });
+
+    $("#btnSubmitForm").click(function () {
+        submitForm();
+    });
+
+});
+
+$("#FillupForm").validate({
+    errorPlacement: function (error, element) {
+        if (element.attr("name") === "bif1")
+            error.insertAfter($("#DateOfCall"));
+        else
+            error.insertAfter(element);
+    },
+    focusInvalid: false,
+    invalidHandler: function (form, validator) {
+
+        if (!validator.numberOfInvalids())
+            return;
+
+        $("html, body").animate({
+            scrollTop: $(validator.errorList[0].element).offset().top - 70
+        }, 1000);
+
+    }
+});
+
+
+
+
+function GatherUserResponse() {
 
     var basicResponseArr = [];
     var dynResponseArr = [];
@@ -24,7 +72,7 @@
     }
 
 
-    //Find all the Boolean questions
+    //Find all the Boolean ques
     var boolQuestions = document.getElementsByClassName("BooleanQuestion");
 
     if (boolQuestions.length > 0) {
@@ -36,7 +84,7 @@
 
             //Add the response to response array
             dynResponseArr.push({
-                quesID: activeRadioBtn.id.split('-')[1],
+                quesID: activeRadioBtn.id.split("-")[1],
                 response: activeRadioBtn.innerText
             });
         }
@@ -46,7 +94,7 @@
     var dropdownQuestions = document.getElementsByClassName("DropDownQuestion");
 
     if (dropdownQuestions.length > 0) {
-        //Iterate through every dropdown questions
+        //Iterate through every dropdown ques
         for (i = 0, len = dropdownQuestions.length; i < len; i++) {
 
             //Find the selected dropdown choice
@@ -55,7 +103,7 @@
 
             //Add the response to response array
             dynResponseArr.push({
-                quesID: selectedChoice.id.split('-')[1],
+                quesID: selectedChoice.id.split("-")[1],
                 response: selectedChoice.text
             });
         }
@@ -66,7 +114,7 @@
 
     if (freeTextQuestions.length > 0) {
 
-        //Iterate through every free text questions
+        //Iterate through every free text ques
         for (i = 0, len = freeTextQuestions.length; i < len; i++) {
 
             //Find the free text input
@@ -74,12 +122,16 @@
 
             //Add the response to response array
             dynResponseArr.push({
-                quesID: textInput.id.split('-')[1],
+                quesID: textInput.id.split("-")[1],
                 response: textInput.value.trim()
-        });
+            });
         }
     }
 
-    var response = [basicResponseArr, dynResponseArr];
-    alert(JSON.stringify(response));
+    //Get the Questionairre ID
+    var qnnrId = { qnnrID: document.getElementById("qnnrID").innerText }
+
+
+    var response = [qnnrId, basicResponseArr, dynResponseArr];
+    //alert(JSON.stringify(response));
 }
