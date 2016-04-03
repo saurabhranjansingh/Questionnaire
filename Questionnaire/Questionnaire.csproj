@@ -146,6 +146,7 @@
     <Compile Include="ViewModels\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModels\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModels\EditQuestionnaireViewModel.cs" />
+    <Compile Include="ViewModels\EditQuestionViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
@@ -172,7 +173,7 @@
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\NewDDItem.cs" />
+    <Compile Include="ViewModels\DrpDwnItem.cs" />
     <Compile Include="ViewModels\ViewQuestionsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +221,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\creative.js" />
+    <Content Include="Scripts\Custom\AdminEditQues.js" />
     <Content Include="Scripts\Custom\Fillup.js" />
     <Content Include="Scripts\Custom\LandingPage.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -265,7 +267,6 @@
     <Content Include="Views\QM\Index.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\Delete.cshtml" />
-    <Content Include="Views\Question\Details.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\DropDownValue\Create.cshtml" />

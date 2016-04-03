@@ -8,7 +8,7 @@ namespace Questionnaire.HTMLBuilder
         {
         }
 
-        public override string GetHtml()
+        public override string GetHtml(int dispHierarchy)
         {
             return string.Format(htmlSkeleton, question.QuesText);
         }

@@ -1,4 +1,8 @@
 ﻿@model Questionnaire.ViewModels.CreateQuestionViewModel
+@section Scripts
+{
+    <script src="~/Scripts/Custom/AdminCreateQues.js"></script>
+}
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -70,8 +74,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnCreateQuestion" type="submit" value="Create" class="btn btn-primary pull-right" style="margin-left: 15px;"/>
-                @Html.ActionLink("Cancel", "Index", "Question", new { id = @Model.QuestionnaireID }, new { @class = "btn btn-warning pull-right" })
+                <input id="btnCreateQuestion" type="submit" value="Create" class="btn btn-success pull-right" style="margin-left: 15px;"/>
+                @Html.ActionLink("Cancel", "Index", "Question", new { id = @Model.QuestionnaireID }, new { @class = "btn btn-primary pull-right" })
             </div>
         </div>
     </div>

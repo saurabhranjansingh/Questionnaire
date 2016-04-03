@@ -15,7 +15,7 @@ namespace Questionnaire.HTMLBuilder
             _dropDownItemHtml = HtmlSkeleton.DropDownItemHtml;
         }
 
-        public override string GetHtml()
+        public override string GetHtml(int dispHierarchy)
         {
             var ddChoices = (from x in _ddv
                              where x.QuestionID == question.ID
@@ -29,7 +29,7 @@ namespace Questionnaire.HTMLBuilder
                 dropdownOptionsHtml = string.Format("{0}{1}", dropdownOptionsHtml, tmpStr);
             }
             
-            return string.Format(htmlSkeleton, question.Hierarchy, question.QuesText, dropdownOptionsHtml);
+            return string.Format(htmlSkeleton, dispHierarchy, question.QuesText, dropdownOptionsHtml);
         }
     }
 }

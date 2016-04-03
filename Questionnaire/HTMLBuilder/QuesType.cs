@@ -35,6 +35,6 @@ namespace Questionnaire.HTMLBuilder
         }
         
 
-        public abstract string GetHtml();
+        public abstract string GetHtml(int displayHierarchy);
     }
 }

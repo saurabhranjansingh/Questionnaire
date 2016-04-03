@@ -2,6 +2,12 @@
     margin: 20px 0;
 }
 
+.InstructionMsg {
+    margin-top: 30px;
+    padding-left: 30px;
+    font-weight: 600;
+}
+
 .QuestionNumber {
     float: left;
     font-size: large;

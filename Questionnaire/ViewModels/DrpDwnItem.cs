@@ -1,6 +1,6 @@
 ﻿namespace Questionnaire.ViewModels
 {
-    public class NewDDItem
+    public class DrpDwnItem
     {
         public int ID { get; set; }
 

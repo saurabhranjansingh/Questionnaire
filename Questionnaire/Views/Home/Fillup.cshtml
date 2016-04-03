@@ -50,110 +50,124 @@
                 <div class="hidden" id="qnnrID">@ViewBag.QuestionairreID</div>
                 <hr />
             </div>
-            <form id="FillupForm">
 
-                <div class="row">
-                    <div class="col-lg-offset-2 col-lg-8">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Basic Information</div>
-                            <div class="panel-body">
-                                <div class="form-horizontal">
+            @{
+                if (ViewBag.NumberOfQues > 0)
+                {
+                    <form id="FillupForm">
 
-                                    @*Field 1 : Date of Call*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="DateOfCall">Date of Call</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="input-group" id="DateOfCall">
-                                                <input id="BasicInputField1" name="bif1" class="form-control UserInputBasic" placeholder="MM/DD/YYYY" type="text" required />
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
+                        <div class="row">
+                            <div class="col-lg-offset-2 col-lg-8">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Basic Information</div>
+                                    <div class="panel-body">
+                                        <div class="form-horizontal">
+
+                                            @*Field 1 : Date of Call*@
+                                            <div class="row BasicInputRow form-group required">
+                                                <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                    <label for="DateOfCall">Date of Call</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group" id="DateOfCall">
+                                                        <input id="BasicInputField1" name="bif1" class="form-control UserInputBasic" placeholder="MM/DD/YYYY" type="text" required />
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
 
-                                    @*Field 2 : Company*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField2">Company</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField2" name="bif2" class="form-control UserInputBasic" type="text" maxlength="100" required />
-                                        </div>
-                                    </div>
+                                            @*Field 2 : Company*@
+                                            <div class="row BasicInputRow form-group required">
+                                                <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                    <label for="BasicInputField2">Company</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input id="BasicInputField2" name="bif2" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                                </div>
+                                            </div>
 
-                                    @*Field 3 : Client Lead*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField3">Client Lead</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField3" name="bif3" class="form-control UserInputBasic" type="text" maxlength="100" required />
-                                        </div>
-                                    </div>
+                                            @*Field 3 : Client Lead*@
+                                            <div class="row BasicInputRow form-group required">
+                                                <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                    <label for="BasicInputField3">Client Lead</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input id="BasicInputField3" name="bif3" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                                </div>
+                                            </div>
 
-                                    @*Field 4 : Deltek Sales Lead*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField4">Deltek Sales Lead</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField4" name="bif4" class="form-control UserInputBasic" type="text" maxlength="100" required />
-                                        </div>
-                                    </div>
+                                            @*Field 4 : Deltek Sales Lead*@
+                                            <div class="row BasicInputRow form-group required">
+                                                <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                    <label for="BasicInputField4">Deltek Sales Lead</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input id="BasicInputField4" name="bif4" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                                </div>
+                                            </div>
 
-                                    @*Field 5 : Infotek Lead*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField5">Infotek Lead</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField5" name="bif5" class="form-control UserInputBasic" type="text" maxlength="100" required />
-                                        </div>
-                                    </div>
+                                            @*Field 5 : Infotek Lead*@
+                                            <div class="row BasicInputRow form-group required">
+                                                <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                    <label for="BasicInputField5">Infotek Lead</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input id="BasicInputField5" name="bif5" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                                </div>
+                                            </div>
 
-                                    @*Field 6 : Contact Number*@
-                                    <div class="row BasicInputRow form-group">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField6">Contact Number</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField6" name="bif6" class="form-control UserInputBasic" type="text" maxlength="100" />
-                                        </div>
-                                    </div>
+                                            @*Field 6 : Contact Number*@
+                                            <div class="row BasicInputRow form-group">
+                                                <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                    <label for="BasicInputField6">Contact Number</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input id="BasicInputField6" name="bif6" class="form-control UserInputBasic" type="text" maxlength="100" />
+                                                </div>
+                                            </div>
 
-                                    @*Field 5 : Contact Email*@
-                                    <div class="row BasicInputRow form-group">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField7">Contact Email</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField7" name="bif7" class="form-control UserInputBasic" type="email" maxlength="100" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="pull-right" style="font-size: small">
-                                            <span class="text-primary">*</span><span style="margin-right: 20px;">&nbsp;required fields</span>
-                                        </div>
-                                    </div>
+                                            @*Field 5 : Contact Email*@
+                                            <div class="row BasicInputRow form-group">
+                                                <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                    <label for="BasicInputField7">Contact Email</label>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <input id="BasicInputField7" name="bif7" class="form-control UserInputBasic" type="email" maxlength="100" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="pull-right" style="font-size: small">
+                                                    <span class="text-primary">*</span><span style="margin-right: 20px;">&nbsp;required fields</span>
+                                                </div>
+                                            </div>
 
+                                        </div>
+
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
+
+                        @Html.Raw(ViewBag.GeneratedHtml)
+
+                    </form>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-lg-11">
+                            <div id="btnSubmitForm" class="btn btn-lg btn-success pull-right">Submit</div>
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <h3 class="text-info">Sorry!</h3>
+                    <h3>No questions have been setup for this Questionnaire yet.</h3>
+                    <p>Please contact the admin of this application for any help.</p>
+                    @Html.ActionLink("Go Back","Index");
+                }
+            }
 
-                @Html.Raw(ViewBag.GeneratedHtml)
-
-            </form>
-            <div class="row" style="margin-top: 30px;">
-                <div class="col-lg-11">
-                    <div id="btnSubmitForm" class="btn btn-lg btn-success pull-right">Submit</div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -171,7 +185,7 @@
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/Custom/Fillup.js"></script>
- 
+
 
 </body>
 </html>

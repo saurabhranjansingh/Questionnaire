@@ -12,6 +12,8 @@ namespace Questionnaire.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class QuestionnaireDBContext : DbContext
     {
@@ -29,5 +31,14 @@ namespace Questionnaire.Models
         public virtual DbSet<Question> Question { get; set; }
         public virtual DbSet<QuestionnaireMaster> QuestionnaireMaster { get; set; }
         public virtual DbSet<QuestionType> QuestionType { get; set; }
+    
+        public virtual ObjectResult<Nullable<int>> DeleteQuestion(Nullable<int> questionID)
+        {
+            var questionIDParameter = questionID.HasValue ?
+                new ObjectParameter("QuestionID", questionID) :
+                new ObjectParameter("QuestionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("DeleteQuestion", questionIDParameter);
+        }
     }
 }

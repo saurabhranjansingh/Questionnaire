@@ -9,27 +9,50 @@
 
 
 <table class="table table-striped">
-    <tr>
-        <th>
-            Name
-        </th>
-        <th></th>
-    </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            @*<td style="width: 5px; background-color: #ffffff; border: none">
+                @if (item.IsActive)
+                {
+                    <span style="color: #32cd32; font-size: x-small"><i class="fa fa-circle"></i></span>
+                }
+                else
+                {
+                    <span style="color: lightgrey; font-size: x-small"><i class="fa fa-circle"></i></span>
+                }
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Edit", "Edit", new {id = item.ID}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.ID})
+                @if (item.IsActive)
+                {
+                    <span style="color: #32cd32; font-size: x-small; margin-left: 10px"><i class="fa fa-circle"></i></span>
+                }
+                else
+                {
+                    <span style="color: lightgrey; font-size: x-small; margin-left: 10px"><i class="fa fa-circle"></i></span>
+                }
             </td>
         </tr>
     }
 
 </table>
 <div class="row">
-    <div class="pull-right">@Html.ActionLink("Create New", "Create", "QM", new { @class = "btn btn-primary" })</div>
+    <div class="pull-right">
+        <div class="col-sm-12">
+            <span style="color: #32cd32; font-size: x-small; margin: 0 5px;"><i class="fa fa-circle"></i></span>Active
+            <span style="color: lightgrey; font-size: x-small; margin: 0 5px;"><i class="fa fa-circle"></i></span>Inactive
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+    <div class="col-sm-12">
+        <div class="pull-right">@Html.ActionLink("Create New", "Create", "QM", new { @class = "btn btn-success" })</div>
+    </div>
 </div>

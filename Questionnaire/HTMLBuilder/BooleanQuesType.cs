@@ -8,9 +8,9 @@ namespace Questionnaire.HTMLBuilder
         {
         }
 
-        public override string GetHtml()
+        public override string GetHtml(int dispHierarchy)
         {
-            return string.Format(htmlSkeleton, question.Hierarchy, question.QuesText, question.ID, question.ID, question.ID);
+            return string.Format(htmlSkeleton, dispHierarchy, question.QuesText, question.ID, question.ID, question.ID);
         }
     }
 }

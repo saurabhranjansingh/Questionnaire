@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuestionnaireDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuestionnaireDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="DropDownValues">
           <Key>
             <PropertyRef Name="ID" />
@@ -29,6 +29,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionType">
           <Key>
@@ -79,6 +80,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="spDeleteQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="QuestionnaireDBModelStoreContainer">
           <EntitySet Name="DropDownValues" EntityType="Self.DropDownValues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
@@ -97,8 +101,7 @@
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuestionnaireDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -131,6 +134,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Question" Relationship="Self.FK_QuestionnaireID_ID" FromRole="QuestionnaireMaster" ToRole="Question" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="QuestionType">
           <Key>
@@ -199,6 +203,9 @@
             <End Role="QuestionType" EntitySet="QuestionType" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
+          <FunctionImport Name="DeleteQuestion" ReturnType="Collection(Int32)">
+            <Parameter Name="QuestionID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -229,6 +236,7 @@
           <EntitySetMapping Name="QuestionnaireMaster">
             <EntityTypeMapping TypeName="QuestionnaireDBModel.QuestionnaireMaster">
               <MappingFragment StoreEntitySet="QuestionnaireMaster">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -242,6 +250,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteQuestion" FunctionName="QuestionnaireDBModel.Store.spDeleteQuestion" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

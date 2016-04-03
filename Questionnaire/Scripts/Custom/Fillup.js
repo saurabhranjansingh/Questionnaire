@@ -1,9 +1,11 @@
 ﻿function submitForm() {
+
     //console.log("validating..");
-    GatherUserResponse();
 
     if ($("#FillupForm").valid()) {
-        alert("GREAT! form is valid");
+        console.log("GREAT! form is valid");
+        var userResponse = GatherUserResponse();
+        console.log(JSON.stringify(userResponse));
     } 
 }
 
@@ -133,5 +135,5 @@ function GatherUserResponse() {
 
 
     var response = [qnnrId, basicResponseArr, dynResponseArr];
-    //alert(JSON.stringify(response));
+    return response;
 }

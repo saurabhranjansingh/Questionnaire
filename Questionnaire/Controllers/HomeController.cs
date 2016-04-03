@@ -15,7 +15,7 @@ namespace Questionnaire.Controllers
 
         public ActionResult Index()
         {
-            var questionnaireList = db.QuestionnaireMaster.ToList().OrderBy(i => i.Name);
+            var questionnaireList = db.QuestionnaireMaster.Where(k => k.IsActive == true).ToList().OrderBy(i => i.Name);
 
             if (!questionnaireList.Any())
             {
@@ -45,7 +45,8 @@ namespace Questionnaire.Controllers
             {
                 return HttpNotFound();
             }
-            
+
+            ViewBag.NumberOfQues = qr.Question.Count;
             ViewBag.QuestionnaireName = qr.Name;
             ViewBag.QuestionairreID = qr.ID;
             ViewBag.GeneratedHtml = FetchOutputHtml(id);

@@ -35,7 +35,7 @@ namespace Questionnaire.Controllers
         {
             if (ModelState.IsValid)
             {
-                var questionnaireMaster = new QuestionnaireMaster {Name = cqVM.Name};
+                var questionnaireMaster = new QuestionnaireMaster {Name = cqVM.Name, IsActive = cqVM.IsActive};
                 db.QuestionnaireMaster.Add(questionnaireMaster);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -76,7 +76,8 @@ namespace Questionnaire.Controllers
             EditQuestionnaireViewModel eqVM = new EditQuestionnaireViewModel
             {
                 ID = questionnaireMaster.ID,
-                Name = questionnaireMaster.Name
+                Name = questionnaireMaster.Name,
+                IsActive = questionnaireMaster.IsActive
             };
             return View(eqVM);
         }
@@ -88,7 +89,7 @@ namespace Questionnaire.Controllers
         {
             if (ModelState.IsValid)
             {
-                var qm = new QuestionnaireMaster {ID = eqVM.ID, Name = eqVM.Name};
+                var qm = new QuestionnaireMaster {ID = eqVM.ID, Name = eqVM.Name, IsActive = eqVM.IsActive};
 
                 db.Entry(qm).State = EntityState.Modified;
                 db.SaveChanges();

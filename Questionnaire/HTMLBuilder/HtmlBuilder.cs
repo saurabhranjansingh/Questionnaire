@@ -12,7 +12,7 @@ namespace Questionnaire.HTMLBuilder
         {
             string FinalHtmlString = string.Empty;
             List<DropDownValues> ddValues;
-
+            int displayHierarchy = 0;
             foreach (var ques in questions)
             {
                 ddValues = null;
@@ -20,8 +20,12 @@ namespace Questionnaire.HTMLBuilder
                 if (ques.QuestionType1.QuesType.Equals("Dropdown"))
                     ddValues = dropDownChoices;
 
+                if (!ques.QuestionType1.QuesType.Equals("Instruction"))
+                    displayHierarchy++;
+
+
                 var quesType = QuesTypeFactory.GetQuesTypeObj(ques, ddValues);
-                string quesHtml = quesType.GetHtml();
+                string quesHtml = quesType.GetHtml(displayHierarchy);
 
                 FinalHtmlString = String.Format("{0}{1}", FinalHtmlString, quesHtml);
             }

@@ -24,7 +24,7 @@ namespace Questionnaire.Controllers
             {
                 return HttpNotFound();
             }
-            
+
 
             ViewBag.QuestionnaireName = qr.Name;
             ViewBag.QuestionnaireID = qr.ID;
@@ -32,6 +32,7 @@ namespace Questionnaire.Controllers
             var questions = from x in db.Question
                             join y in db.QuestionnaireMaster on x.QuestionnaireID equals y.ID
                             where y.ID == id
+                            orderby x.Hierarchy ascending
                             select new ViewQuestionsViewModel
                             {
                                 ID = x.ID,
@@ -44,20 +45,6 @@ namespace Questionnaire.Controllers
             return View(questions.ToList());
         }
 
-        // GET: Question/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Question question = db.Question.Find(id);
-            if (question == null)
-            {
-                return HttpNotFound();
-            }
-            return View(question);
-        }
 
         // GET: Question/Create
         public ActionResult Create(int id)
@@ -101,7 +88,7 @@ namespace Questionnaire.Controllers
                 //If its a dropdown question
                 if (cqVM.QuestionType == 2)
                 {
-                    var DDItemsList = (List<NewDDItem>)Session["NewQuestionDDItems"];
+                    var DDItemsList = (List<DrpDwnItem>)Session["NewQuestionDDItems"];
 
                     foreach (var item in DDItemsList)
                     {
@@ -121,7 +108,7 @@ namespace Questionnaire.Controllers
 
                 db.Question.Add(q);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { id = cqVM.QuestionnaireID});
+                return RedirectToAction("Index", new { id = cqVM.QuestionnaireID });
             }
 
             return View(cqVM);
@@ -139,9 +126,28 @@ namespace Questionnaire.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QuestionnaireID = new SelectList(db.QuestionnaireMaster, "ID", "Name", question.QuestionnaireID);
-            ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType", question.QuestionType);
-            return View(question);
+
+            List<DrpDwnItem> ddValues = (from x in question.DropDownValues
+                                         where x.QuestionID == question.ID
+                                         select new DrpDwnItem
+                                         {
+                                             QuestionID = question.ID,
+                                             ID = x.ID,
+                                             Value = x.Value
+                                         }).ToList();
+
+            Session["ExistingDDValues"] = ddValues;
+
+            EditQuestionViewModel eqVM = new EditQuestionViewModel
+            {
+                QuestionnaireID = question.QuestionnaireID,
+                Questionnaire = question.QuestionnaireMaster.Name,
+                QuestionType = question.QuestionType1.QuesType,
+                QuesText = question.QuesText,
+                Hierarchy = question.Hierarchy,
+                DropDownItems = ddValues
+            };
+            return View(eqVM);
         }
 
         [HttpPost]
@@ -179,10 +185,9 @@ namespace Questionnaire.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Question question = db.Question.Find(id);
-            db.Question.Remove(question);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            //Call the Stored Proc spDeleteQuestion
+            int? questionnaireId = db.DeleteQuestion(id).FirstOrDefault();
+            return RedirectToAction("Index", new { id = questionnaireId });
         }
 
         protected override void Dispose(bool disposing)
