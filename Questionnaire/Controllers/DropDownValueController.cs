@@ -15,59 +15,83 @@ namespace Questionnaire.Controllers
 
         // GET: DropDownValue
         //This method is called while CREATING a new dropdown question.
-        public ActionResult _ViewDropDownItems()
+        public ActionResult _ViewDropDownItems(int id)
         {
+            /*********
+            id == 1 : Action method is called while creating question
+            id == 2 : Action method is called while editing question
+            *********/
+
             List<DrpDwnItem> DDItemsList;
-
-            if (Session["NewQuestionDDItems"] == null)
+            if (id == 1)
             {
-                DDItemsList = new List<DrpDwnItem>();
+                if (Session["NewQuestionDDItems"] == null)
+                {
+                    DDItemsList = new List<DrpDwnItem>();
 
-                Session["NewQuestionDDItems"] = DDItemsList;
+                    Session["NewQuestionDDItems"] = DDItemsList;
+                }
+                else
+                {
+                    DDItemsList = (List<DrpDwnItem>)Session["NewQuestionDDItems"];
+                }
             }
-            else
+            else //if (id == 2)
             {
-                DDItemsList = (List<DrpDwnItem>) Session["NewQuestionDDItems"];
+                DDItemsList = (List<DrpDwnItem>)Session["ExistingDDValues"];
             }
-            return View(DDItemsList);
-        }
-
-        //This method is called while EDITING dropdown questions.
-        public ActionResult _ViewExistingDropDownItems()
-        {
-            List<DrpDwnItem> DDItemsList = (List<DrpDwnItem>)Session["ExistingDDValues"];
             
             return View(DDItemsList);
-           
         }
-
+   
 
         // GET: DropDownValue
-        public ActionResult AddNewItem(string item)
+        public ActionResult AddNewItem(string mode, string item)
         {
             List<DrpDwnItem> DDItemsList;
 
-            if (Session["NewQuestionDDItems"] == null)
+            if (mode.Equals("create"))
             {
-                DDItemsList = new List<DrpDwnItem>();
-            }
-            else
-            {
-                DDItemsList = (List<DrpDwnItem>)Session["NewQuestionDDItems"];
-            }
+                if (Session["NewQuestionDDItems"] == null)
+                {
+                    DDItemsList = new List<DrpDwnItem>();
+                }
+                else
+                {
+                    DDItemsList = (List<DrpDwnItem>)Session["NewQuestionDDItems"];
+                }
 
-            DDItemsList.Add(new DrpDwnItem { Value = item });
-            Session["NewQuestionDDItems"] = DDItemsList;
+                DDItemsList.Add(new DrpDwnItem { Value = item });
+                //Session["NewQuestionDDItems"] = DDItemsList;
+            }
+            else //mode == "edit"
+            {
+                DDItemsList = (List<DrpDwnItem>)Session["ExistingDDValues"];
+                DDItemsList.Add(new DrpDwnItem { Value = item });
+                //Session["ExistingDDValues"] = DDItemsList;
+            }
 
             return View("_ViewDropDownItems", DDItemsList);
         }
 
         public ActionResult RemoveItem(string ItemName)
         {
-            List<DrpDwnItem> DDItemsList = (List<DrpDwnItem>) Session["NewQuestionDDItems"];
+            List<DrpDwnItem> DDItemsList;
+
+            //if Session["NewQuestionDDItems"] contains dropdown elements it means we are creating new question
+            if (Session["NewQuestionDDItems"] != null)
+            {
+                DDItemsList = (List<DrpDwnItem>)Session["NewQuestionDDItems"];
+                
+            }
+            else //We are editing an existing question
+            {
+                DDItemsList = (List<DrpDwnItem>)Session["ExistingDDValues"];
+            }
+
             foreach (var item in DDItemsList)
             {
-                if(item.Value.ToString().ToUpper().Trim().Equals(ItemName.ToUpper().Trim()))
+                if (item.Value.ToString().ToUpper().Trim().Equals(ItemName.ToUpper().Trim()))
                 {
                     DDItemsList.Remove(item);
                     break;

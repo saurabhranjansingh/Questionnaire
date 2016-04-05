@@ -6,7 +6,7 @@
         $("#AddAtleast1DDItem").hide();
 
         /* Request the partial view with .get request. */
-        $.get("/DropDownValue/_ViewExistingDropDownItems/", function (data) {
+        $.get("/DropDownValue/_ViewDropDownItems/2", function (data) {
 
             /* data is the pure html returned from action method, load it directly */
             $("#DropDownValuesPlaceHolder").html(data);
@@ -26,12 +26,12 @@ function CheckIfAnyDDItemExists() {
     }).get();
 
 
-    //If there are no items present in the List of dropdown items then Disable the 'Create Question' button.
+    //If there are no items present in the List of dropdown items then Disable the 'Save' button.
     if (allExistingValues.length == 0) {
-        $("#btnCreateQuestion").prop("disabled", true);
+        $("#btnSave").prop("disabled", true);
         $("#AddAtleast1DDItem").show();
     } else {
-        $("#btnCreateQuestion").prop("disabled", false);
+        $("#btnSave").prop("disabled", false);
         $("#AddAtleast1DDItem").hide();
     }
 }
@@ -58,7 +58,7 @@ function AddNewItemToDropDownList() {
         }
 
         /* Request the partial view with .get request. */
-        $.get("/DropDownValue/AddNewItem/?item=" + newItemToAdd, function (data) {
+        $.get("/DropDownValue/AddNewItem/?mode=edit&item=" + newItemToAdd, function (data) {
 
             /* data is the pure html returned from action method, load it to your page */
             $("#DropDownValuesPlaceHolder").html(data);

@@ -14,7 +14,7 @@
         if (selectedId == 2) {
 
             /* Request the partial view with .get request. */
-            $.get("/DropDownValue/_ViewDropDownItems/", function (data) {
+            $.get("/DropDownValue/_ViewDropDownItems/1", function (data) {
 
                 /* data is the pure html returned from action method, load it directly */
                 $("#DropDownValuesPlaceHolder").html(data);
@@ -54,7 +54,7 @@ function AddNewItemToDropDownList() {
         }
 
         /* Request the partial view with .get request. */
-        $.get("/DropDownValue/AddNewItem/?item=" + newItemToAdd, function (data) {
+        $.get("/DropDownValue/AddNewItem/?mode=create&item=" + newItemToAdd, function (data) {
 
             /* data is the pure html returned from action method, load it to your page */
             $("#DropDownValuesPlaceHolder").html(data);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -49,10 +50,8 @@ namespace Questionnaire.Controllers
         // GET: Question/Create
         public ActionResult Create(int id)
         {
-            if (Session["NewQuestionDDItems"] != null)
-            {
-                Session["NewQuestionDDItems"] = null;
-            }
+            Session["NewQuestionDDItems"] = null;
+            Session["ExistingDDValues"] = null;
 
             var qr = db.QuestionnaireMaster.Find(id);
             if (qr == null)
@@ -127,6 +126,9 @@ namespace Questionnaire.Controllers
                 return HttpNotFound();
             }
 
+            Session["NewQuestionDDItems"] = null;
+            Session["ExistingDDValues"] = null;
+
             List<DrpDwnItem> ddValues = (from x in question.DropDownValues
                                          where x.QuestionID == question.ID
                                          select new DrpDwnItem
@@ -140,6 +142,7 @@ namespace Questionnaire.Controllers
 
             EditQuestionViewModel eqVM = new EditQuestionViewModel
             {
+                QuestionID = question.ID,
                 QuestionnaireID = question.QuestionnaireID,
                 Questionnaire = question.QuestionnaireMaster.Name,
                 QuestionType = question.QuestionType1.QuesType,
@@ -152,17 +155,39 @@ namespace Questionnaire.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,QuestionnaireID,QuestionType,Hierarchy,QuesText")] Question question)
+        public ActionResult Edit(EditQuestionViewModel eqVM)
         {
-            if (ModelState.IsValid)
+            var ques = (from q in db.Question
+                       where q.ID == eqVM.QuestionID
+                       select q).FirstOrDefault();
+
+            //Update the question text if required
+            if (!ques.QuesText.Equals(eqVM.QuesText.Trim()))
             {
-                db.Entry(question).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                ques.QuesText = eqVM.QuesText;
             }
-            ViewBag.QuestionnaireID = new SelectList(db.QuestionnaireMaster, "ID", "Name", question.QuestionnaireID);
-            ViewBag.QuestionType = new SelectList(db.QuestionType, "ID", "QuesType", question.QuestionType);
-            return View(question);
+
+            //Update the dropdown values
+            if (ques.QuestionType1.QuesType.Equals("Dropdown"))
+            {
+                //Remove all the existing items.
+                db.DropDownValues.RemoveRange(db.DropDownValues.Where(k => k.QuestionID == ques.ID));
+             
+                //add new rows
+                foreach (var k in eqVM.DropDownItems)
+                {
+                    var ddv = new DropDownValues
+                    {
+                        QuestionID = ques.ID,
+                        Value = k.Value
+                    };
+                    db.DropDownValues.Add(ddv);
+                }
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { id = eqVM.QuestionnaireID });
         }
 
         // GET: Question/Delete/5
