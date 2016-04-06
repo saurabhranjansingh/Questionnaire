@@ -19,7 +19,5 @@ namespace Questionnaire.ViewModels
         public string QuestionType { get; set; }
 
         public int Hierarchy { get; set; }
-
-        public List<DrpDwnItem> DropDownItems { get; set; }
     }
 }

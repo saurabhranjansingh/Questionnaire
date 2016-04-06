@@ -11,13 +11,18 @@
             /* data is the pure html returned from action method, load it directly */
             $("#DropDownValuesPlaceHolder").html(data);
             $("#DropDownValuesPlaceHolder").fadeIn("fast");
+
+            //Check if dropdown items are already present (because they are stored in session)
+            CheckIfAnyDDItemExists();
         });
-
-        //Check if dropdown items are already present (because they are stored in session)
-        CheckIfAnyDDItemExists();
     }
-
 });
+
+function PopulateDropdownPlaceHolderTag(htmlContent) {
+    /* data is the pure html returned from action method, load it directly */
+    $("#DropDownValuesPlaceHolder").html(htmlContent);
+    $("#DropDownValuesPlaceHolder").fadeIn("fast");
+}
 
 function CheckIfAnyDDItemExists() {
 

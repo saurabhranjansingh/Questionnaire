@@ -147,8 +147,7 @@ namespace Questionnaire.Controllers
                 Questionnaire = question.QuestionnaireMaster.Name,
                 QuestionType = question.QuestionType1.QuesType,
                 QuesText = question.QuesText,
-                Hierarchy = question.Hierarchy,
-                DropDownItems = ddValues
+                Hierarchy = question.Hierarchy
             };
             return View(eqVM);
         }
@@ -168,18 +167,22 @@ namespace Questionnaire.Controllers
             }
 
             //Update the dropdown values
-            if (ques.QuestionType1.QuesType.Equals("Dropdown"))
+            if (ques.QuestionType == 2)
             {
                 //Remove all the existing items.
                 db.DropDownValues.RemoveRange(db.DropDownValues.Where(k => k.QuestionID == ques.ID));
-             
+                
                 //add new rows
-                foreach (var k in eqVM.DropDownItems)
+                var d = new List<DropDownValues>();
+
+                var DDItemsList = (List<DrpDwnItem>)Session["ExistingDDValues"];
+
+                foreach (var item in DDItemsList)
                 {
                     var ddv = new DropDownValues
                     {
                         QuestionID = ques.ID,
-                        Value = k.Value
+                        Value = item.Value
                     };
                     db.DropDownValues.Add(ddv);
                 }
