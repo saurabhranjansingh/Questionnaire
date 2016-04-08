@@ -3,10 +3,26 @@
     //console.log("validating..");
 
     if ($("#FillupForm").valid()) {
-        console.log("GREAT! form is valid");
-        var userResponse = GatherUserResponse();
-        console.log(JSON.stringify(userResponse));
-    } 
+        var response = GatherUserResponse();
+
+        var questionnaireID = JSON.stringify(response[0]);
+        var staticInputs = JSON.stringify(response[1]);
+        var dynamicInputs = JSON.stringify(response[2]);
+        var result = "{qnnrID : " + questionnaireID + ", staticInputs : " + staticInputs + ", dynamicInputs : " + dynamicInputs + "}";
+        var userResponse = "{ response: " + result + "}";
+   
+        $.ajax({
+            url: '/Home/Save',
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: userResponse,
+            success: function (data) { window.location.href = data },
+            failure: function (errMsg) {
+                alert(errMsg);
+            }
+        });
+    }
 }
 
 $(function () {
@@ -50,8 +66,8 @@ $("#FillupForm").validate({
 
 function GatherUserResponse() {
 
-    var basicResponseArr = [];
-    var dynResponseArr = [];
+    var staticInputFields = [];
+    var dynamicInputFields = [];
     var i = 0;
     var len = 0;
 
@@ -66,7 +82,7 @@ function GatherUserResponse() {
             var userInputBasicQues = basicInputQuestions[i].querySelector(".UserInputBasic");
 
             //Add the response to response array
-            basicResponseArr.push({
+            staticInputFields.push({
                 quesID: userInputBasicQues.id,
                 response: userInputBasicQues.value.trim()
             });
@@ -85,7 +101,7 @@ function GatherUserResponse() {
             var activeRadioBtn = boolQuestions[i].querySelector(".active");
 
             //Add the response to response array
-            dynResponseArr.push({
+            dynamicInputFields.push({
                 quesID: activeRadioBtn.id.split("-")[1],
                 response: activeRadioBtn.innerText
             });
@@ -104,7 +120,7 @@ function GatherUserResponse() {
             var selectedChoice = ddCtrl.options[ddCtrl.selectedIndex];
 
             //Add the response to response array
-            dynResponseArr.push({
+            dynamicInputFields.push({
                 quesID: selectedChoice.id.split("-")[1],
                 response: selectedChoice.text
             });
@@ -123,17 +139,37 @@ function GatherUserResponse() {
             var textInput = freeTextQuestions[i].querySelector(".userTextInput");
 
             //Add the response to response array
-            dynResponseArr.push({
+            dynamicInputFields.push({
                 quesID: textInput.id.split("-")[1],
                 response: textInput.value.trim()
             });
         }
     }
 
+    //Find all the Instructions
+    var instructions = document.getElementsByClassName("InstructionMsg");
+
+    if (instructions.length > 0) {
+
+        //Iterate through every free text ques
+        for (i = 0, len = instructions.length; i < len; i++) {
+
+            //Find the free text input
+            var instructionText = instructions[i].querySelector(".instructDiv");
+
+            //Add the response to response array
+            dynamicInputFields.push({
+                quesID: instructionText.id.split("-")[1],
+                response: ""
+            });
+        }
+    }
+
+
     //Get the Questionairre ID
-    var qnnrId = { qnnrID: document.getElementById("qnnrID").innerText }
+    //var qnnrId = { qnnrID: document.getElementById("qnnrID").innerText }
 
 
-    var response = [qnnrId, basicResponseArr, dynResponseArr];
+    var response = [document.getElementById("qnnrID").innerText, staticInputFields, dynamicInputFields];
     return response;
 }

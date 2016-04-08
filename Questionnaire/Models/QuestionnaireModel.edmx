@@ -38,6 +38,55 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="QuesType" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Heirarchy" Type="int" Nullable="false" />
+          <Property Name="Text" Type="varchar(max)" Nullable="false" />
+          <Property Name="Response" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ReportMaster">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="QuestionnaireID" Type="int" />
+          <Property Name="Field1" Type="date" Nullable="false" />
+          <Property Name="Field2" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Field3" Type="varchar" MaxLength="255" />
+          <Property Name="Field4" Type="varchar" MaxLength="255" />
+          <Property Name="Field5" Type="varchar" MaxLength="255" />
+          <Property Name="Contact" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="320" />
+          <Property Name="CreatedAt" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Report__ReportID__3A81B327">
+          <End Role="ReportMaster" Type="Self.ReportMaster" Multiplicity="1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportMaster">
+              <PropertyRef Name="ReportID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="ReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReportMas__Quest__37A5467C">
+          <End Role="QuestionnaireMaster" Type="Self.QuestionnaireMaster" Multiplicity="0..1" />
+          <End Role="ReportMaster" Type="Self.ReportMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionnaireMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReportMaster">
+              <PropertyRef Name="QuestionnaireID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QuestionID_ID">
           <End Role="Question" Type="Self.Question" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -88,6 +137,16 @@
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionnaireMaster" EntityType="Self.QuestionnaireMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuestionType" EntityType="Self.QuestionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportMaster" EntityType="Self.ReportMaster" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Report__ReportID__3A81B327" Association="Self.FK__Report__ReportID__3A81B327">
+            <End Role="ReportMaster" EntitySet="ReportMaster" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReportMas__Quest__37A5467C" Association="Self.FK__ReportMas__Quest__37A5467C">
+            <End Role="QuestionnaireMaster" EntitySet="QuestionnaireMaster" />
+            <End Role="ReportMaster" EntitySet="ReportMaster" />
+          </AssociationSet>
           <AssociationSet Name="FK_QuestionID_ID" Association="Self.FK_QuestionID_ID">
             <End Role="Question" EntitySet="Question" />
             <End Role="DropDownValues" EntitySet="DropDownValues" />
@@ -135,6 +194,7 @@
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Question" Relationship="Self.FK_QuestionnaireID_ID" FromRole="QuestionnaireMaster" ToRole="Question" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ReportMaster" Relationship="QuestionnaireDBModel.FK__ReportMas__Quest__37A5467C" FromRole="QuestionnaireMaster" ToRole="ReportMaster" />
         </EntityType>
         <EntityType Name="QuestionType">
           <Key>
@@ -204,9 +264,71 @@
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
           <FunctionImport Name="DeleteQuestion" ReturnType="Collection(Int32)">
-            <Parameter Name="QuestionID" Mode="In" Type="Int32" />
+          <Parameter Name="QuestionID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Report" EntityType="QuestionnaireDBModel.Report" />
+          <EntitySet Name="ReportMaster" EntityType="QuestionnaireDBModel.ReportMaster" />
+          <AssociationSet Name="FK__ReportMas__Quest__37A5467C" Association="QuestionnaireDBModel.FK__ReportMas__Quest__37A5467C">
+            <End Role="QuestionnaireMaster" EntitySet="QuestionnaireMaster" />
+            <End Role="ReportMaster" EntitySet="ReportMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Report__ReportID__3A81B327" Association="QuestionnaireDBModel.FK__Report__ReportID__3A81B327">
+            <End Role="ReportMaster" EntitySet="ReportMaster" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportID" Type="Guid" Nullable="false" />
+          <Property Name="Heirarchy" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Response" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReportMaster" Relationship="QuestionnaireDBModel.FK__Report__ReportID__3A81B327" FromRole="Report" ToRole="ReportMaster" />
+        </EntityType>
+        <EntityType Name="ReportMaster">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="Guid" Nullable="false" />
+          <Property Name="QuestionnaireID" Type="Int32" />
+          <Property Name="Field1" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Field2" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Field3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Field4" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Field5" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="QuestionnaireMaster" Relationship="QuestionnaireDBModel.FK__ReportMas__Quest__37A5467C" FromRole="ReportMaster" ToRole="QuestionnaireMaster" />
+          <NavigationProperty Name="Report" Relationship="QuestionnaireDBModel.FK__Report__ReportID__3A81B327" FromRole="ReportMaster" ToRole="Report" />
+        </EntityType>
+        <Association Name="FK__ReportMas__Quest__37A5467C">
+          <End Type="QuestionnaireDBModel.QuestionnaireMaster" Role="QuestionnaireMaster" Multiplicity="0..1" />
+          <End Type="QuestionnaireDBModel.ReportMaster" Role="ReportMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionnaireMaster">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReportMaster">
+              <PropertyRef Name="QuestionnaireID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Report__ReportID__3A81B327">
+          <End Type="QuestionnaireDBModel.ReportMaster" Role="ReportMaster" Multiplicity="1" />
+          <End Type="QuestionnaireDBModel.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportMaster">
+              <PropertyRef Name="ReportID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="ReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -251,6 +373,33 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeleteQuestion" FunctionName="QuestionnaireDBModel.Store.spDeleteQuestion" />
+          <EntitySetMapping Name="Report">
+            <EntityTypeMapping TypeName="QuestionnaireDBModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Heirarchy" ColumnName="Heirarchy" />
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportMaster">
+            <EntityTypeMapping TypeName="QuestionnaireDBModel.ReportMaster">
+              <MappingFragment StoreEntitySet="ReportMaster">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Field5" ColumnName="Field5" />
+                <ScalarProperty Name="Field4" ColumnName="Field4" />
+                <ScalarProperty Name="Field3" ColumnName="Field3" />
+                <ScalarProperty Name="Field2" ColumnName="Field2" />
+                <ScalarProperty Name="Field1" ColumnName="Field1" />
+                <ScalarProperty Name="QuestionnaireID" ColumnName="QuestionnaireID" />
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

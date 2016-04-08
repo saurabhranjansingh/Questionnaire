@@ -18,12 +18,6 @@
     }
 });
 
-function PopulateDropdownPlaceHolderTag(htmlContent) {
-    /* data is the pure html returned from action method, load it directly */
-    $("#DropDownValuesPlaceHolder").html(htmlContent);
-    $("#DropDownValuesPlaceHolder").fadeIn("fast");
-}
-
 function CheckIfAnyDDItemExists() {
 
     var allExistingValues = $(".ddExistingValue").map(function() {

@@ -31,6 +31,8 @@ namespace Questionnaire.Models
         public virtual DbSet<Question> Question { get; set; }
         public virtual DbSet<QuestionnaireMaster> QuestionnaireMaster { get; set; }
         public virtual DbSet<QuestionType> QuestionType { get; set; }
+        public virtual DbSet<Report> Report { get; set; }
+        public virtual DbSet<ReportMaster> ReportMaster { get; set; }
     
         public virtual ObjectResult<Nullable<int>> DeleteQuestion(Nullable<int> questionID)
         {

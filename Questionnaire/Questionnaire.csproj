@@ -127,6 +127,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\QMController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\ReportMasterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -143,10 +144,17 @@
     <Compile Include="HTMLBuilder\HtmlBuilder.cs" />
     <Compile Include="HTMLBuilder\HtmlSkeleton.cs" />
     <Compile Include="HTMLBuilder\QuesType.cs" />
+    <Compile Include="Models\Report.cs">
+      <DependentUpon>QuestionnaireModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReportMaster.cs">
+      <DependentUpon>QuestionnaireModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModels\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModels\EditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModels\EditQuestionViewModel.cs" />
+    <Compile Include="ViewModels\HelperModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Question.cs">
       <DependentUpon>QuestionnaireModel.tt</DependentUpon>
@@ -277,6 +285,12 @@
     <Content Include="Views\Shared\_ViewDropDownItems.cshtml" />
     <Content Include="Views\Shared\_FillupLayout.cshtml" />
     <Content Include="Views\Home\Fillup.cshtml" />
+    <Content Include="Views\ReportMaster\Create.cshtml" />
+    <Content Include="Views\ReportMaster\Delete.cshtml" />
+    <Content Include="Views\ReportMaster\Details.cshtml" />
+    <Content Include="Views\ReportMaster\Edit.cshtml" />
+    <Content Include="Views\ReportMaster\Index.cshtml" />
+    <Content Include="Views\Shared\_SearchReportLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

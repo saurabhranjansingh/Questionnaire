@@ -12,22 +12,27 @@ namespace Questionnaire.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class QuestionnaireMaster
+    public partial class ReportMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public QuestionnaireMaster()
+        public ReportMaster()
         {
-            this.Question = new HashSet<Question>();
-            this.ReportMaster = new HashSet<ReportMaster>();
+            this.Report = new HashSet<Report>();
         }
     
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
+        public System.Guid ReportID { get; set; }
+        public Nullable<int> QuestionnaireID { get; set; }
+        public System.DateTime Field1 { get; set; }
+        public string Field2 { get; set; }
+        public string Field3 { get; set; }
+        public string Field4 { get; set; }
+        public string Field5 { get; set; }
+        public string Contact { get; set; }
+        public string Email { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
     
+        public virtual QuestionnaireMaster QuestionnaireMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Question> Question { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReportMaster> ReportMaster { get; set; }
+        public virtual ICollection<Report> Report { get; set; }
     }
 }

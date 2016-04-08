@@ -12,6 +12,10 @@
         <AssociationConnector Association="QuestionnaireDBModel.FK_QuestionID_ID" ManuallyRouted="false" />
         <AssociationConnector Association="QuestionnaireDBModel.FK_QuestionnaireID_ID" ManuallyRouted="false" />
         <AssociationConnector Association="QuestionnaireDBModel.FK_QuestionType_ID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="QuestionnaireDBModel.Report" Width="1.5" PointX="5.25" PointY="6.25" />
+        <EntityTypeShape EntityType="QuestionnaireDBModel.ReportMaster" Width="1.5" PointX="3" PointY="5.625" />
+        <AssociationConnector Association="QuestionnaireDBModel.FK__ReportMas__Quest__37A5467C" />
+        <AssociationConnector Association="QuestionnaireDBModel.FK__Report__ReportID__3A81B327" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

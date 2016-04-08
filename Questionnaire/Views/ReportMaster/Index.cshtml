@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Questionnaire.Models.ReportMaster>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_SearchReportLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Date of Call
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Field2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Field3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Field4)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Field5)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuestionnaireMaster.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Field1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Field2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Field3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Field4)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Field5)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionnaireMaster.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ReportID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ReportID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReportID })
+        </td>
+    </tr>
+}
+
+</table>
