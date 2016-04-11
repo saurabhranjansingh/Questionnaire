@@ -218,6 +218,33 @@ namespace Questionnaire.Controllers
             return RedirectToAction("Index", new { id = questionnaireId });
         }
 
+        public ActionResult Hierarchy(int id)
+        {
+            var qr = db.QuestionnaireMaster.Find(id);
+            if (qr == null)
+            {
+                return HttpNotFound();
+            }
+            
+            ViewBag.QuestionnaireName = qr.Name;
+            ViewBag.QuestionnaireID = qr.ID;
+
+            var questions = from x in db.Question
+                            join y in db.QuestionnaireMaster on x.QuestionnaireID equals y.ID
+                            where y.ID == id
+                            orderby x.Hierarchy ascending
+                            select new EditHierarchyViewModel
+                            {
+                                QuestionID = x.ID,
+                                Hierarchy = x.Hierarchy,
+                                QuesText = x.QuesText,
+                                QuestionType = x.QuestionType1.QuesType
+                            };
+
+
+            return View(questions.ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

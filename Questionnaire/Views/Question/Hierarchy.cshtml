@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Questionnaire.ViewModels.EditHierarchyViewModel>
+@section Scripts
+{
+    <script src="https://code.jquery.com/ui/1.12.0-rc.1/jquery-ui.min.js"></script>
+    <script>
+        $('#quesList').sortable();
+    </script>
+
+}
+@{
+    ViewBag.Title = "Hierarchy";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-sm-12">
+        <h4 class="text-center">@ViewBag.QuestionnaireName</h4>
+    </div>
+</div>
+<hr/>
+
+<div style="margin-bottom: 20px;">Drag the questions Up or Down to change their hierarchy.</div>
+
+<div id="quesList">
+    @foreach (var item in Model)
+    {
+        <div class="row alert @(item.QuestionType.Equals("Instruction") ? "alert-info" : "alert-warning")" style="margin: 8px 0; padding: 8px;">
+            <div class="col-md-10">@Html.DisplayFor(modelItem => item.QuesText)</div>
+            <div class="col-md-2"><strong>@Html.DisplayFor(modelItem => item.QuestionType)</strong>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col-md-offset-2 col-md-10">
+        <input id="btnSave" type="submit" value="Save" class="btn btn-success pull-right" style="margin-left: 15px;" />
+        @Html.ActionLink("Cancel", "Index", "Question", new { id = @ViewBag.QuestionnaireID }, new { @class = "btn btn-primary pull-right" })
+    </div>
+</div>

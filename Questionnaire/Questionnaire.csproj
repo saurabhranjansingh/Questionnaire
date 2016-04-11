@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="ViewModels\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModels\CreateQuestionViewModel.cs" />
+    <Compile Include="ViewModels\EditHierarchyViewModel.cs" />
     <Compile Include="ViewModels\EditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModels\EditQuestionViewModel.cs" />
     <Compile Include="ViewModels\HelperModel.cs" />
@@ -291,6 +292,7 @@
     <Content Include="Views\ReportMaster\Edit.cshtml" />
     <Content Include="Views\ReportMaster\Index.cshtml" />
     <Content Include="Views\Shared\_SearchReportLayout.cshtml" />
+    <Content Include="Views\Question\Hierarchy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
