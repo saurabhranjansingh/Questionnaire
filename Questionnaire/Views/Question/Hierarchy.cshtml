@@ -1,31 +1,38 @@
 ﻿@model IEnumerable<Questionnaire.ViewModels.EditHierarchyViewModel>
 @section Scripts
 {
-    <script src="https://code.jquery.com/ui/1.12.0-rc.1/jquery-ui.min.js"></script>
-    <script>
-        $('#quesList').sortable();
-    </script>
-
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/Custom/AdminEditHierarchy.js"></script>
 }
 @{
     ViewBag.Title = "Hierarchy";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <div class="row">
     <div class="col-sm-12">
-        <h4 class="text-center">@ViewBag.QuestionnaireName</h4>
+        <h3 class="text-center">Change Hierarchy</h3>
     </div>
 </div>
-<hr/>
+<hr />
 
-<div style="margin-bottom: 20px;">Drag the questions Up or Down to change their hierarchy.</div>
+<div class="row">
+    <div class="col-sm-12 text-info">
+        <h4>@ViewBag.QuestionnaireName</h4>
+    </div>
+</div>
+<div id="qnnrId" class="hidden">@ViewBag.QuestionnaireID</div>
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-sm-12 small">Drag the questions Up or Down to change their hierarchy.</div>
+</div>
 
 <div id="quesList">
     @foreach (var item in Model)
     {
-        <div class="row alert @(item.QuestionType.Equals("Instruction") ? "alert-info" : "alert-warning")" style="margin: 8px 0; padding: 8px;">
+        <div id="id-@item.QuestionID-@item.Hierarchy" class="row alert @(item.QuestionType.Equals("Instruction") ? "HierarchyInstruction" : "HierarchyQuestion")">
             <div class="col-md-10">@Html.DisplayFor(modelItem => item.QuesText)</div>
-            <div class="col-md-2"><strong>@Html.DisplayFor(modelItem => item.QuestionType)</strong>
+            <div class="col-md-2">
+                <strong>@Html.DisplayFor(modelItem => item.QuestionType)</strong>
             </div>
         </div>
     }

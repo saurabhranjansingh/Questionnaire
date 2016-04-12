@@ -36,6 +36,11 @@ namespace Questionnaire.ViewModels
         public string field3 { get; set; }
         public string field4 { get; set; }
         public string field5 { get; set; }
+    }
 
+    public class UpdatedHierarchyOrder
+    {
+        public int qnnrID { get; set; }
+        public List<string> newOrder { get; set; }
     }
 }

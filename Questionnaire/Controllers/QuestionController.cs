@@ -157,8 +157,8 @@ namespace Questionnaire.Controllers
         public ActionResult Edit(EditQuestionViewModel eqVM)
         {
             var ques = (from q in db.Question
-                       where q.ID == eqVM.QuestionID
-                       select q).FirstOrDefault();
+                        where q.ID == eqVM.QuestionID
+                        select q).FirstOrDefault();
 
             //Update the question text if required
             if (!ques.QuesText.Equals(eqVM.QuesText.Trim()))
@@ -171,7 +171,7 @@ namespace Questionnaire.Controllers
             {
                 //Remove all the existing items.
                 db.DropDownValues.RemoveRange(db.DropDownValues.Where(k => k.QuestionID == ques.ID));
-                
+
                 //add new rows
                 var d = new List<DropDownValues>();
 
@@ -218,6 +218,7 @@ namespace Questionnaire.Controllers
             return RedirectToAction("Index", new { id = questionnaireId });
         }
 
+        //GET
         public ActionResult Hierarchy(int id)
         {
             var qr = db.QuestionnaireMaster.Find(id);
@@ -225,7 +226,7 @@ namespace Questionnaire.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             ViewBag.QuestionnaireName = qr.Name;
             ViewBag.QuestionnaireID = qr.ID;
 
@@ -244,6 +245,39 @@ namespace Questionnaire.Controllers
 
             return View(questions.ToList());
         }
+
+        [HttpPost]
+        public ActionResult Hierarchy(UpdatedHierarchyOrder s)
+        {
+            var DbNeedsToBeUpdated = false;
+            for (int i = 1; i <= s.newOrder.Count; i++)
+            {
+                //The id of the element is in form : id-<quesID>-<Hierarchy>. eg id-1109-3
+                var arr = s.newOrder[i - 1].Split('-');
+
+                var oriHierarchy = int.Parse(arr[2]);
+                var newHierarchy = i;
+                if (newHierarchy != oriHierarchy)
+                {
+                    var quesId = int.Parse(arr[1]);
+                    //Hierarchy needs to be updated.   
+                    var ques = (from q in db.Question
+                                where q.ID == quesId
+                                select q).FirstOrDefault();
+
+                    ques.Hierarchy = newHierarchy;
+                    DbNeedsToBeUpdated = true;
+                }
+            }
+            if (DbNeedsToBeUpdated)
+            {
+                db.SaveChanges();
+            }
+
+            return Json(Url.Action("Index", "Question", new { id = s.qnnrID}));
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
