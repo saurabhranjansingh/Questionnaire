@@ -4,11 +4,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Questionnaire.Filters;
 using Questionnaire.Models;
 using Questionnaire.ViewModels;
 
 namespace Questionnaire.Controllers
 {
+    [AdminAuthorize]
     public class DropDownValueController : Controller
     {
         private QuestionnaireDBContext db = new QuestionnaireDBContext();

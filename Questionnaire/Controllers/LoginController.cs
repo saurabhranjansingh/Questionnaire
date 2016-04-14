@@ -23,19 +23,29 @@ namespace Questionnaire.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Index");
             }
 
-            if(model.Password.Equals("12345"))
-            {
+            Session["IsAdmin"] = null;
 
-                return RedirectToAction("Index","QM");
+            if (model.Password.Equals("12345"))
+            {
+                Session["IsAdmin"] = true;
+                return RedirectToAction("Index", "QM");
             }
             else
             {
                 ModelState.AddModelError("INVALID_PWD", "Invalid login attempt.");
                 return View("Index");
             }
+        }
+
+        public ActionResult Logout()
+        {
+            if (Session["IsAdmin"] != null)
+                Session["IsAdmin"] = null;
+
+            return View();
         }
     }
 }

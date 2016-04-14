@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Questionnaire.Filters;
 using Questionnaire.Models;
 using Questionnaire.ViewModels;
 
 namespace Questionnaire.Controllers
 {
+    [AdminAuthorize]
     public class QMController : Controller
     {
         private QuestionnaireDBContext db = new QuestionnaireDBContext();

@@ -123,11 +123,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DropDownValueController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\QMController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\ReportMasterController.cs" />
+    <Compile Include="Filters\AdminAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -295,6 +297,10 @@
     <Content Include="Views\ReportMaster\Index.cshtml" />
     <Content Include="Views\Shared\_SearchReportLayout.cshtml" />
     <Content Include="Views\Question\Hierarchy.cshtml" />
+    <Content Include="Views\Error\Unauthorised.cshtml" />
+    <None Include="Views\Error\PageNotFound.cshtml" />
+    <None Include="Views\Error\UnexpectedError.cshtml" />
+    <None Include="Views\Login\Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
