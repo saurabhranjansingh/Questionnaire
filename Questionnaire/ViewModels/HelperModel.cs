@@ -43,4 +43,22 @@ namespace Questionnaire.ViewModels
         public int qnnrID { get; set; }
         public List<string> newOrder { get; set; }
     }
+
+    public class ViewReport
+    {
+        public Guid ReportID { get; set; }
+        public int Heirarchy { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime field1 { get; set; }
+        public String field2 { get; set; }
+        public String field3 { get; set; }
+        public String field4 { get; set; }
+        public String field5 { get; set; }
+        public String Text { get; set; }
+        public String Response { get; set; }
+        public String Contact { get; set; }
+        public String Email { get; set; }
+        public String QuestionType { get; set; }
+        public String QuestionnaireName { get; set; }
+    }
 }

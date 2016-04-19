@@ -47,114 +47,112 @@
     <section>
         <div class="container">
             <div class="row text-center">
-                <h3 class="text-primary">@ViewBag.QuestionnaireName</h3>
-                <div class="hidden" id="qnnrID">@ViewBag.QuestionairreID</div>
+                <h3 class="text-primary">Search Report</h3>
                 <hr />
             </div>
-            <form id="FillupForm">
 
-                <div class="row">
-                    <div class="col-lg-offset-2 col-lg-8">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Basic Information</div>
-                            <div class="panel-body">
-                                <div class="form-horizontal">
+            <form id="SearchForm">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-lg-offset-2 col-lg-8">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Basic Information</div>
+                                <div class="panel-body">
+                                    <div class="form-horizontal">
 
-                                    @*Field 1 : Date of Call*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="DateOfCall">Date of Call</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="input-group" id="DateOfCall">
-                                                <input id="BasicInputField1" name="bif1" class="form-control UserInputBasic" placeholder="MM/DD/YYYY" type="text" required />
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-calendar"></i>
-                                                </span>
+                                        @*Field 1 : Date of Call*@
+                                        <div class="row BasicInputRow form-group required">
+                                            <div class="col-sm-2 control-label">
+                                                <label for="DateOfCall">Date of Call</label>
+                                            </div>
+                                            <div class="col-sm-2 control-label">
+                                                <label for="StartDate">Start Date</label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group" id="startDate">
+                                                    <input id="startDateField" name="bif1" class="form-control UserInputBasic" placeholder="MM/DD/YYYY" type="text" required />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 control-label">
+                                                <label for="EndDate">End Date</label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="input-group" id="endDate">
+                                                    <input id="endDateField" name="bif1" class="form-control UserInputBasic" placeholder="MM/DD/YYYY" type="text" required />
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar"></i>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    @*Field 2 : Company*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField2">Company</label>
+                                        @*Field 2 : Company*@
+                                        <div class="row BasicInputRow form-group required">
+                                            <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                <label for="BasicInputField2">Company</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input id="BasicInputField2" name="bif2" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField2" name="bif2" class="form-control UserInputBasic" type="text" maxlength="100" required />
-                                        </div>
-                                    </div>
 
-                                    @*Field 3 : Client Lead*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField3">Client Lead</label>
+                                        @*Field 3 : Client Lead*@
+                                        <div class="row BasicInputRow form-group required">
+                                            <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                <label for="BasicInputField3">Client Lead</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input id="BasicInputField3" name="bif3" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField3" name="bif3" class="form-control UserInputBasic" type="text" maxlength="100" required />
-                                        </div>
-                                    </div>
 
-                                    @*Field 4 : Deltek Sales Lead*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField4">Deltek Sales Lead</label>
+                                        @*Field 4 : Deltek Sales Lead*@
+                                        <div class="row BasicInputRow form-group required">
+                                            <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                <label for="BasicInputField4">Deltek Sales Lead</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input id="BasicInputField4" name="bif4" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField4" name="bif4" class="form-control UserInputBasic" type="text" maxlength="100" required />
-                                        </div>
-                                    </div>
 
-                                    @*Field 5 : Infotek Lead*@
-                                    <div class="row BasicInputRow form-group required">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField5">Infotek Lead</label>
+                                        @*Field 5 : Infotek Lead*@
+                                        <div class="row BasicInputRow form-group required">
+                                            <div class="col-sm-offset-1 col-sm-3 control-label">
+                                                <label for="BasicInputField5">Infotek Lead</label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input id="BasicInputField5" name="bif5" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField5" name="bif5" class="form-control UserInputBasic" type="text" maxlength="100" required />
+                                        <div class="row" style="margin-top: 30px;">
+                                            <div class="col-lg-11">
+                                                <div class="btn btn-success pull-right" onclick="submitForm();">Search</div>
+                                            </div>
                                         </div>
-                                    </div>
+                                        @*<div class="row">
+                                                <div class="pull-right" style="font-size: small">
+                                                    <span class="text-primary">*</span><span style="margin-right: 20px;">&nbsp;required fields</span>
+                                                </div>
+                                            </div>*@
 
-                                    @*Field 6 : Contact Number*@
-                                    <div class="row BasicInputRow form-group">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField6">Contact Number</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField6" name="bif6" class="form-control UserInputBasic" type="text" maxlength="100" />
-                                        </div>
-                                    </div>
-
-                                    @*Field 5 : Contact Email*@
-                                    <div class="row BasicInputRow form-group">
-                                        <div class="col-sm-offset-1 col-sm-3 control-label">
-                                            <label for="BasicInputField7">Contact Email</label>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input id="BasicInputField7" name="bif7" class="form-control UserInputBasic" type="email" maxlength="100" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="pull-right" style="font-size: small">
-                                            <span class="text-primary">*</span><span style="margin-right: 20px;">&nbsp;required fields</span>
-                                        </div>
                                     </div>
 
                                 </div>
-
                             </div>
                         </div>
                     </div>
-                </div>
+                }
 
                 @RenderBody()
 
             </form>
-            <div class="row" style="margin-top: 30px;">
-                <div class="col-lg-11">
-                    <div class="btn btn-lg btn-success pull-right" onclick="submitForm(); return false;">Submit</div>
-                </div>
-            </div>
+
         </div>
     </section>
 
@@ -166,56 +164,28 @@
     <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script src="~/Scripts/jquery.easing.min.js"></script>
     <script src="~/Scripts/jquery.fittext.js"></script>
-    <script src="~/Scripts/wow.min.js"></script>
-    <script src="~/Scripts/creative.js"></script>
     <script src="/Scripts/jquery.validate.js"></script>
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-    <script src="~/Scripts/Custom/Fillup.js"></script>
+    <script src="~/Scripts/Custom/Report.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/css/ui.jqgrid.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-en.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/jquery.jqGrid.min.js"></script>
+    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
     <script type="text/javascript">
-    function submitForm() {
-        console.log("validating..");
-        ccc();
-
-        //if ($('#FillupForm').valid()) {
-        //    alert('GREAT! form is valid');
-        //} else {
-        //    alert('form is not valid');
-        //}
-    }
-
-    $(function() {
-        $('.date').datetimepicker({ format: "MM/DD/YYYY" });
-        $('#DateOfCall').datetimepicker({ format: "MM/DD/YYYY" });
-    });
-
-    $("#FillupForm").validate({
-        errorPlacement: function(error, element) {
-            if (element.attr("name") === 'bif1')
-                error.insertAfter($("#DateOfCall"));
-            else
-                error.insertAfter(element);
-        },
-        focusInvalid: false,
-        invalidHandler: function(form, validator) {
-
-            if (!validator.numberOfInvalids())
-                return;
-
-            $('html, body').animate({
-                scrollTop: $(validator.errorList[0].element).offset().top - 70
-            }, 1000);
-
+        function submitForm() {
+            console.log("validating..");
+            $("#tblJQGrid").jqGrid("clearGridData", true).GridUnload();
+            searchReports();
         }
-    });
 
-    $('.num').each(function () {
-        $(this).rules('add', {
-            number: true
+        $(function() {
+            $('.date').datetimepicker({ format: "MM/DD/YYYY" });
+            $('#DateOfCall').datetimepicker({ format: "MM/DD/YYYY" });
         });
-    });
-    </script>
 
+    </script>
 
 </body>
 </html>

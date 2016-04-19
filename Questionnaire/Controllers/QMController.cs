@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using Questionnaire.Filters;
 using Questionnaire.Models;
@@ -27,9 +28,10 @@ namespace Questionnaire.Controllers
         // GET: QM/Create
         public ActionResult Create()
         {
+            //return new HttpStatusCodeResult(500);
             return View();
         }
-
+        
         // POST: QM/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -5,75 +5,66 @@
     Layout = "~/Views/Shared/_SearchReportLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Search Results</h2>
+<head>
+    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jquery.jqGrid.min.js"></script>
+    <script type="text/javascript">
 
-<table class="table">
-    <tr>
-        <th>
-            Date of Call
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Field2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Field3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Field4)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Field5)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contact)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuestionnaireMaster.Name)
-        </th>
-        <th></th>
-    </tr>
+        function loadGrid(data) {
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Field1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Field2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Field3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Field4)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Field5)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contact)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.QuestionnaireMaster.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReportID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReportID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReportID })
-        </td>
-    </tr>
-}
+            $("#tblJQGrid").jqGrid(
+            {
+                url: '',
+                datatype: "jsonstring",
+                mtype: 'GET',
+                datastr: data,
+                colNames: ['ReportID','Date Of Call', 'Company', 'Client Lead', 'Deltek Sales Lead', 'Infotek Lead', 'Created At', 'Action'],
+                colModel: [
+                { name: 'ReportID', hidden: true },
+                { name: 'Field1', width: 120, formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y" }, },
+                { name: 'Field2', width: 160 },
+                { name: 'Field3', width: 200 },
+                { name: 'Field4', width: 200 },
+                { name: 'Field5', width: 200 },
+                { name: 'CreatedAt', width: 150, formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y" } },
+                {
+                    name: 'LinkButton',
+                    formatter: function (cellvalue, options, rowObject) {
+                        var param = '@Html.ActionLink( "View", "ViewReport","ReportMaster",new { requestId ="ReportID"  }, new { target = "_blank" })';
+                        debugger;
+                        return param.replace("ReportID", rowObject.ReportID);
+                    }, align: 'center', width: 100
+                }],
+                ready: function () {
+                    $("#tblJQGrid").jqxGrid('selectcell', 0, 'Field1');
+                    $("#tblJQGrid").jqxGrid('wrapper').focus();
+                },
+                pager: jQuery('#pager'),
+                rowNum: 10,
+                //sortname: 'Field1',
+                viewrecords: true,
+                //sortorder: "desc",
+                caption: "",
+                gridview: true,
+                scrollOffset: 2,
+                multiSort: true,
+                sortable:true,
+                sortname: 'Field1,Field2,Field3,Field4,Field5,CreatedAt,LinkButton',
+                sortorder: 'asc',
+                height:230
+            });
 
-</table>
+
+            $("#tblJQGrid").focus();
+        }
+    </script>
+</head>
+<body>
+    <table id="tblJQGrid" class="scroll" cellpadding="0" cellspacing="0"></table>
+    <div id="pager" class="scroll" style="text-align:center;"></div>
+</body>
+
+

@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "ViewReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 0;
+}
+<link href="~/Content/AdminStyle.css" rel="stylesheet" />
+<link href="~/Content/Fillup.css" rel="stylesheet" />
+@model IEnumerable<Questionnaire.ViewModels.ViewReport>
+@using (Html.BeginForm("ExportToExcel", "ReportMaster"))
+{
+    foreach (var item in Model)
+    {
+        <div class="row text-center">
+            <h3 class="text-primary">@Html.DisplayFor(modelItem => item.QuestionnaireName)</h3>
+            <div class="hidden" id="qnnrID">@ViewBag.QuestionairreID</div>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-2 col-lg-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Basic Information</div>
+                    <div class="panel-body">
+                        <div class="form-horizontal">
+
+                            <div class="row BasicInputRow form-group ">
+                                <div class="col-sm-3 control-label" style="text-align:left;">
+                                    <label for="DateOfCall">Date of Call</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    @Html.DisplayFor(modelItem => item.field1)
+                                </div>
+                                <div class=" col-sm-3 control-label" style="text-align:left;">
+                                    <label for="BasicInputField2">Company</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    @Html.DisplayFor(modelItem => item.field2)
+                                </div>
+                            </div>
+
+                            <div class="row BasicInputRow form-group ">
+                                <div class="col-sm-3 control-label" style="text-align:left;">
+                                    <label for="BasicInputField3">Client Lead</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    @Html.DisplayFor(modelItem => item.field3)
+                                </div>
+                                <div class="col-sm-3 control-label" style="text-align:left;">
+                                    <label for="BasicInputField4">Deltek Sales Lead</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    @Html.DisplayFor(modelItem => item.field4)
+                                </div>
+                            </div>
+
+
+                            <div class="row BasicInputRow form-group ">
+                                <div class="col-sm-3 control-label" style="text-align:left;">
+                                    <label for="BasicInputField5">Infotek Lead</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    @Html.DisplayFor(modelItem => item.field5)
+                                </div>
+                                <div class="col-sm-3 control-label" style="text-align:left;">
+                                    <label for="BasicInputField6">Contact Number</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    @Html.DisplayFor(modelItem => item.Contact)
+                                </div>
+                            </div>
+
+
+                            <div class="row BasicInputRow form-group">
+                                <div class="col-sm-3 control-label" style="text-align:left;">
+                                    <label for="BasicInputField7">Contact Email</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </div>
+                                <div class="col-sm-3 control-label" style="text-align:left;">
+                                    <label for="BasicInputField6">Created At</label>
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;vertical-align:bottom; ">
+                                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        break;
+    }
+    <br />
+
+
+    foreach (var item in Model)
+    {
+
+        if (item.QuestionType == "Instruction")
+        {
+            <div class="row InstructionMsg">
+                <div class="col-sm-12">
+                    <div id="instructTxt-3" class="text instructDiv text-info">@Html.DisplayFor(modelItem => item.Text)</div>
+                </div>
+            </div>
+        }
+        else
+        {
+            count = count + 1;
+            <div class="row QuestionRow FreeTextQuestion">
+                <div class="text-primary QuestionNumber">@count</div>
+                <div class="col-sm-11 QuestionPanel">
+                    <div class="row">@Html.DisplayFor(modelItem => item.Text)</div>
+                    <div class="row col-sm-12 InputPanel">
+                        <div class="col-sm-offset-11 col-sm-8" style="padding: 0;">
+                            @Html.DisplayFor(modelItem => item.Response)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <div class="row" style="margin-top: 30px;">
+        <div class="col-lg-11">
+            @*<div class="btn btn-lg btn-success pull-right" onclick="location.href='@Url.Action("ExportToExcel", "ReportMaster", new { id = Model })'">Export to Excel</div>*@
+            @*<input type="submit" class="btn btn-lg btn-success pull-right" value="Export to Excel" style="float: right; width: 150px; font-size: 14px" />*@
+            <div class="btn btn-success pull-right">@Html.ActionLink("Export to Excel", "ExportToExcel", new { id = Model.Select(p => p.ReportID).FirstOrDefault().ToString() }, new { @style = "color:#FFFFFF;" })</div> 
+            <div class="btn btn-success pull-right">@Html.ActionLink("Export to PDF", "ExportToPDF", new { id = Model.Select(p => p.ReportID).FirstOrDefault().ToString() }, new { @style = "color:#FFFFFF;" })</div> 
+        </div>
+    </div>
+}
+
+
